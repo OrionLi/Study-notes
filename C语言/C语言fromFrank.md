@@ -275,3 +275,75 @@ break还可以在switch语句中使用
 >do{}while;
 
 ==有分号！==
+
+### 简单举个例
+```c
+#include <stdio.h>
+#define GOLD 1000
+
+int main(void) {
+	int rush = 1;
+	do
+	{
+		rush++;
+		printf("rush = %d\n", rush);
+
+	}while(rush <= 1000);//记得这里加分号！
+	
+	return 0;
+}
+```
+
+---
+
+# for循环(比while灵活些)
+先来过一遍循环三要素（非必选，若没有可能会出问题，除非是业务要求）
+1. 初始化的变量
+2. 判断条件（满足或不满足）
+3. 自增衡量变量
+```c
+#include <stdio.h>
+#define GOLD 1000
+
+int main(void) {
+	int rush;
+	//C primer Plus 定义变量不赋值叫“声明”
+	for (rush = 1; rush <= GOLD; rush++)
+	{
+		printf("rush = %d\n", rush);
+	}
+	printf("挖完了！\n");
+
+	return 0;
+}
+```
+for循环，**第一个分号前面的东西只会执行一次**，通常拿来初始化值
+>rush = 1
+
+**第二个分号前面内容执行完后，会先执行大括号内内容，再到第三个分号前面内容**
+
+上述流程执行完后，会执行第一个分号到第二个分号内容，即：判断-执行-增加
+判断失败，==直接跳出for循环==
+
+# 调试
+==诊断工具没事儿就关掉，耗内存！==，所以没事儿也别点那个已用时间多少ms的灰色字体
+监听变量每一步是怎么执行的
+
+调试前先打断点，程序会执行到断点前面，剩下的靠你操作
+```javascript {.line-numbers}
+#include <stdio.h>
+
+int main(void) {
+	int index;
+	int sum = 0;
+
+	for (index = 0; index < 10; index++) {
+		sum += index;
+		printf("index = %d, sum = %d\n", index, sum);
+	};
+	return 0;
+	}
+```
+在第8行前打点，调试开始后按下F11（逐语句执行）开始执行第8行，箭头指向下一行
+鼠标可以停在变量上看看它现在值是多少
+==调试完把输出窗口关闭！==
