@@ -195,7 +195,21 @@ int main(void) {
 # while循环
 当while里面为假时才不会执行循环
 ## 示例
-![](images/2022-08-01-12-15-18.png)
+```c
+#include <stdio.h>
+#define ONE_KILOMETER 1000
+
+int main(void){
+	int run_meter = 0;
+	while (run_meter < ONE_KILOMETER) {
+		printf("已经跑了%d米\n",run_meter);
+		run_meter += 1;
+	}
+	printf("1000米跑完了！\n");
+
+	return 0;
+}
+```
 %d用于显示一个值（后面的run_meter)
 ==当（）内内容成立，则执行{}内内容==
 每次跑1米，跑完去找体育老师判断跑了1000米没有，没有就接着去跑（由于跑完1000不循环了，所以建议printf告诉用户跑完了）
@@ -208,3 +222,50 @@ int main(void) {
 ## 死循环
 必要的：银行运作、高并发
    >简单来说，四核CPU 一核微信 一核QQ，俩都是==像==while死循环跑着，所以要理解==何时利用死循环==
+
+---
+
+# continue：跳过
+
+```c
+#include <stdio.h>
+#define GOLD 1000
+
+int main(void) {
+	int rush = 0;
+	while (rush <= GOLD) {
+
+		if (rush == 500) {
+			printf("挖到铁矿，扔掉不要！\n");
+			rush++;//碰到不挖了，跳下一个
+			/*满足一定要求的时候，如果使用continue语句，就代表
+			我不要满足条件中的内容，但是我还是要继续干（还是要
+			继续执行循环，但是要注意，一定要在continue之前rush++）*/
+			continue;
+		}
+
+		printf("已经跑了%d米\n", rush);
+		rush += 1;
+	}
+	printf("1000米跑完了！\n");
+
+	return 0;
+}
+
+```
+==注意不要遗漏自增变量==，挖到了不加的话rush就一直在500循环，+1继续就可以跳出if循环
+
+---
+
+# break：中断
+只能断离他最近的那一层while循环
+
+---
+
+# continue和break总结
+==continue和break只能在循环中使用==
+break还可以在switch语句中使用
+
+---
+
+# do...while语句
