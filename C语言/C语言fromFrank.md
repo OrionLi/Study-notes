@@ -268,4 +268,10 @@ break还可以在switch语句中使用
 
 ---
 
-# do...while语句
+# do...while语句（工作很少用）
+==先干活（循环），再判断==，若为true，继续do-while循环
+与while的区别:
+>while(){}
+>do{}while;
+
+==有分号！==
