@@ -392,9 +392,81 @@ int main(void)
 # 函数：一个复合的，能重复使用的工具
 **函数讲究通用性**
 
-## 示例
+## 示例一
 ```javascript {.line-numbers}
-#include
+#include<stdio.h>
+
+//main主函数，整个程序的入口点 
+
+//要写一个函数，首先要预定义（预声明）
+//声明函数
+void sum(int number_1, int number_2);
+
+//函数名：sum
+//函数的返回值类型：void
+//函数的参数：有两个参数，参数的类型都是int类型
+//参数名
+
+int main(void)
+{
+	sum(96,97);
+	return 0;
+}
+
+//定义函数
+//大括号内的叫函数体
+void sum(int number_1, int number_2) {
+	printf("Please input your two numbers,(type int,space):\n");
+	scanf_s("%d %d", &number_1, &number_2);//这里要注意""的位置和&的添加
+	printf("sum=%d\n", number_1 + number_2);
+}
 
 ```
 
+## 示例二
+```javascript {.line-numbers}
+//建议通过调试复习执行步骤
+#include<stdio.h>
+//声明函数
+//形参——形式参数
+//只有定义或者声明函数的时候，那里的参数才叫实参
+int sum(int num1, int num2);
+//函数名：sum
+//函数的返回值类型：int
+//函数的参数：有两个参数，参数的类型都是int类型
+//参数名
+
+int main(void) {
+	//使用函数---调用函数
+	//实参——实际参数（具体的值，输入的值）
+	//调用方这边的参数，一定是实参
+	int num1, num2;
+	printf("输入两个数，中间空格隔开以计算和\n");
+	scanf_s("%d %d", &num1, &num2);
+	int result = sum(num1, num2);
+	printf("result=%d\n", result);
+	return 0;
+}
+//定义函数
+//大括号内叫函数体
+int sum(int num1, int num2) {
+	int score_sum = num1 + num2;
+	return score_sum;
+}
+
+
+```
+
+void：什么都不返回
+如果是void main()，那就不用写return 0
+函数开始时怎么声明的，后面就怎么定义
+函数类型一一对应
+再强调一遍：==scanf_s后面记得加地址！==
+
+# 函数作用域
+辅助理解：域，一个国，上面示例二12行main是一个国，25行sum是另一个国。
+一个函数（国家）不能调用另一个函数（国家）的作用域（户口本），因为这个户口本（作用域）没有登记这个人口（如sun_flower）
+**也就是说在哪个大括号中定义的变量，只能在这个大括号中访问**
+
+**若想几个函数共用一个变量，请把它定义在函数外面**，此时它不属于任何国家，它属于地球 
+## 示例
