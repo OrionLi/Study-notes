@@ -25,6 +25,8 @@ for后先空格再括号
 
 换行一般用\n，\t是4个空格（和前后连在一起也没什么关系）
 
+C语言没有布尔类型
+
 ---
 
 # 基础内容
@@ -56,6 +58,8 @@ const int SUN_FLOWER = 9999
 
 # 赋值运算符
 ![](images/2022-08-01-14-58-35.png)
+
+---
 
 # if的使用
 ## 基本格式
@@ -104,6 +108,8 @@ int main(void){
 ```
 >%3u只会获取前三位数字
 return 0后，程序结束，不再执行后面语句
+
+---
 
 # else if：要不然
 ```c
@@ -302,6 +308,7 @@ int main(void) {
 1. 初始化的变量
 2. 判断条件（满足或不满足）
 3. 自增衡量变量
+==输入for在按两下tab可调出带条件的for循环==
 ```c
 #include <stdio.h>
 #define GOLD 1000
@@ -362,6 +369,8 @@ int main(void) {
 
 ==诊断工具没事儿就关掉，耗内存！==，所以没事儿也别点那个已用时间多少ms的灰色字体
 
+---
+
 # for嵌套
 *for、while、do...while都是可以嵌套使用的*
 
@@ -388,6 +397,8 @@ int main(void)
 	return 0;
 }
 ```
+
+---
 
 # 函数：一个复合的，能重复使用的工具
 **函数讲究通用性**
@@ -463,6 +474,8 @@ void：什么都不返回
 函数类型一一对应
 再强调一遍：==scanf_s后面记得加地址！==
 
+---
+
 # 函数作用域
 辅助理解：域，一个国，上面示例二12行main是一个国，25行sum是另一个国。
 一个函数（国家）不能调用另一个函数（国家）的作用域（户口本），因为这个户口本（作用域）没有登记这个人口（如sun_flower）
@@ -470,3 +483,69 @@ void：什么都不返回
 
 **若想几个函数共用一个变量，请把它定义在函数外面**，此时它不属于任何国家，它属于地球 
 ## 示例
+```javascript {.line-numbers}
+#include<stdio.h>
+
+int sum(int num1,int num2);
+
+int sun_flower = 100;
+
+int main(void) {
+	printf("main_sun_flower = %d\n", sun_flower);
+	sum(1, 1);//这里没有输出score_sum，这里的sum（1，1）是为了调用函数得到里面的printf结果并非为了求和
+	return 0;
+}
+
+int sum(int num1, int num2) {
+	int score_sum = num1 + num2;
+	printf("sum_sun_flower = %d\n", sun_flower);
+	return score_sum;
+}
+```
+>注意：全局变量会受到函数污染
+两个函数中，各自的同名变量是独立的（美国的Frank和中国的Frank当然不是同一个人）
+
+---
+
+# 数组
+## 概念
+![](images/2022-08-05-15-12-08.png)
+这有三个数组
+数组的好处是：可以一次定义多个变量，然后给这些变量赋值
+
+## 使用示例
+前面不初始化，单靠后面赋值，那除了赋值的数，其他数都是垃圾
+```javascript {.line-numbers}
+#include<stdio.h>
+int main(void) {
+	//第一个下标[这个叫下标]（第一个号）
+	//规定下标从0开始，0代表第一个元素，以此类推
+	//数组类型 数组名称[数组长度] = {初始化值}
+	unsigned plants[5] = { 100,50,150,50,25 };//初始化
+	printf("plant---%u\n",plants[1]);
+	return 0;
+}
+```
+
+数组名[下标(索引)] = 值
+>plants[3] = 99意思是
+
+**分清下标和数组长度在中括号内含义**
+==下标从零起==
+
+## 二维数组
+```c
+//平时不常用，算法题可能多见
+#include<stdio.h>
+int main(void) {
+	int a, b;
+	int score[6][5] = { {1,3},{31,26,2,26,67},{1,3,5,6},{3,3,6},{1,9},{5} };
+	//第一个大括号内是行数，第二个大括号内是列数，没有就是没有数
+	scanf_s("%d %d", &a, &b);
+	printf("score = %d\n", score[a][b]);
+	return 0;
+}
+```
+
+---
+
