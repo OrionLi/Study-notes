@@ -549,3 +549,88 @@ int main(void) {
 
 ---
 
+# 数组-表驱动法-（布尔类型）
+优点：让逻辑更简单
+==代替if-else的好选择==,从头到尾就是函数的调用
+>array意思是数组
+
+## 示例一：有布尔
+```javascript {.line-numbers}
+#include<stdio.h>
+#include<stdbool.h>
+
+int 年份对应的月数天数(int 月,int 年);
+bool 是闰年(int 年);
+int 月,年;
+
+//表驱动法：免去繁多的if、else，用数组和存储数据库的方式去替代
+int main(void) {
+	printf("输入月份和年份，中间用空格隔开\n");
+	scanf_s("%d %d", &月, &年);
+	printf("总共%d天\n", 年份对应的月数天数(月, 年));
+	return 0;
+}
+
+//返回每个月的天数，依赖于文件中的 是闰年() 函数
+int 年份对应的月数天数(int 月, int 年) {
+	int day_array[12] = { 31,是闰年(年) ? 29 : 28,31,30,31,30,31,31,30,31,30,31 };
+	return day_array[月 - 1];
+}
+
+//计算该年份是不是闰年或者平年，若是闰年就返回true
+bool 是闰年(int 年){
+	if (年 % 400 == 0 || (年 % 4 == 0 && 年 % 100 != 0))
+		return true;
+	else
+		return false;
+}
+```
+
+## 示例二；免布尔直接莽
+```javascript {.line-numbers}
+#include<stdio.h>
+//#include<stdbool.h>
+
+int 年份对应的月数天数(int 月,int 年);
+//bool 是闰年(int 年);
+int 月,年;
+
+int main(void) {
+	printf("输入月份和年份，中间用空格隔开\n");
+	scanf_s("%d %d", &月, &年);
+	printf("总共%d天\n", 年份对应的月数天数(月, 年));
+	return 0;
+}
+
+int 年份对应的月数天数(int 月, int 年) {
+	int day_array[12] = { 31,(年 % 400 == 0 || (年 % 4 == 0 && 年 % 100 != 0)) ? 29 : 28,31,30,31,30,31,31,30,31,30,31 };
+	return day_array[月 - 1];
+}
+
+/*bool 是闰年(int 年) {
+	if (年 % 400 == 0 || (年 % 4 == 0 && 年 % 100 != 0))
+		return true;
+	else
+		return false;
+}*/
+```
+
+# 枚举（也很常用）
+较灵活
+```c
+#include<stdio.h>
+
+int main(void) {
+	enum WEEK
+	{
+		MON = 1, TUE, WED, THU, FRI, SAT, SUN
+	};
+	//第一个给了1，后面就会+1递增
+
+	//使用枚举
+	enum WEEK day = FRI;
+	printf("%d", day);
+	return 0;
+}
+
+```
