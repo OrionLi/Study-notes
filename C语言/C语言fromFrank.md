@@ -634,3 +634,208 @@ int main(void) {
 }
 
 ```
+
+---
+
+# 指针
+[菜鸟传送门](https://www.runoob.com/cprogramming/c-pointers.html)
+## 比喻理解
+### 比喻一 
+快捷方式通过路径找到原程序
+空指针：“此快捷方式所指向的程序已删除”
+一旦快捷方式产生，立刻指向源文件，即使他改变位置
+也就是说，==指针指向的内容，内容可以做出改变，但是指针永远不会变==
+
+### 比喻二
+医生点病人，2号走了，医生指2号就是指空区域，不知道该到谁
+如果世上病人没了，医生还有何用？这就是空指针
+医生要看frank，frank在一号位，他换到了二号位，医生点的frank还是frank，位置只是快捷方式
+医生（快捷方式）可以变，可以没有医生，但病人不会变
+
+## 空指针和野指针
+空指针：指向一块空的（没有意义的）区域
+野指针；医生疯了，看见个人就给他看病
+
+所以初始化时，指针一定要给null，不然它会成野指针瞎指
+
+5号走了，医生还喊5号，也是瞎看：野指针
+
+## 代码
+指针是一个变量，存另一个变量的地址
+### 示例；通过指针拿到数据
+```c
+#include<stdio.h>
+
+int main(void) {
+
+	int sun_flower = 100;
+	//地址符&
+
+	int* p = &sun_flower;//为sun_flower创建一个快捷方式
+	//变量名是p，类型是int*类型（整形指针类型）
+	//p变量保存了sun_flower的地址
+	//假如p是快捷方式，那他保存了sun_flower地址
+
+	printf("sun_flower address = %p\n", &sun_flower);//输出p的地址
+
+	printf("p = %p\n", p);/*输出快捷方式p（保存）的值
+						  （p已经是地址了，不用再取了，再取就是快捷方式的地址了）*/
+	//所以说，这俩是一样的
+	//sun_flower真实类型是int类型，所以这里用%d输出
+
+	printf("拿到sun_flower的真实数据:%d", sun_flower);
+
+	printf("通过指针（快捷方式）拿到sun_flower的值:%d\n", *p);
+
+	return 0;
+}
+```
+
+### 示例：空指针
+```c
+#include<stdio.h>
+
+int main(void) {
+
+	int* ptr = NULL;//空指针：谁都不指，指NULL告诉程序要学会说没病人
+	printf("ptr = %p\n", ptr);
+
+	int* p;//野指针，说自己不是医生（直接error）
+	//程序此时会随机分配，防止空指针的产生异常（但vs会直接报错）
+	//没有意义的指向
+
+	//我们定义指针，通常就直接直接把他所指向的值也给了
+	return 0;
+}
+
+```
+
+## 指针保存数据地址
+### 符号理解
+==*  &总要有一个，如果都没有，就会产生像第四行一样的结果
+p就是快捷方式，* p就是双击，也就是说写了 * 就代表你要用这个快捷方式了（100）
+&表示从数值读取地址，* 表示从地址读取数据（*就是去地址符）
+带星号就是数，不带就是地址呗==
+```javascript {.line-numbers}
+int number = 100;
+int *p = number;
+printf("number的地址:%p\n",&number);//显示地址
+printf("number的地址:%p\n",p);//100直接转16进制显示64
+```
+所以说在保存一个数组地址的时候，&可以不用
+
+### 示例
+```c
+#include <stdio.h>
+
+const int MAX = 3;
+
+int main()
+{
+    //数组名的值是个指针常量，也就是数组第一个元素的地址，不用&(找到班长就能找到所有人)
+    int  var[] = { 10, 100, 200 };
+    int* ptr = var;
+    printf("var的地址: %p\n", &var);
+    printf("var的地址: %p\n", var);
+    printf("var[0]的地址: %p\n", &var[0]);
+    printf("ptr = %p\n", ptr);
+
+    int number = 100;
+    //亲测：不管怎么样，是int 型的都要&才能获得变量的地址
+    int* p = &number;//但如果p = number（p指向number是不对的）
+    printf("number的地址: %p\n", &number);
+    printf("number的地址: %p\n", number);
+    //变量输出必要带&
+
+    /* 指针中的数组地址(运算？) */
+    ptr = var;
+    for (int i = 0; i < MAX; i++)
+    {
+
+        printf("存储地址：var[%d] = %p\n", i, ptr);
+        printf("存储值：var[%d] = %d\n", i, *ptr);
+
+        /* 指向下一个位置 */
+        ptr++;
+    }
+    return 0;
+}
+```
+
+## 指针数组和字符串
+指针数组：可以存储多个地址
+字符串都以\0结尾
+>因为c语言在给数组分配空间时，在最后一个元素后面还会再预留一个地址空间
+### Frank示例
+```c
+#include <stdio.h>
+
+const int MAX = 3;
+
+int main()
+{
+    //指针数组
+    int* p_arry[3] = { NULL,NULL,NULL };
+    //可以存储多个地址
+
+    //for循环版
+    char greeting[6] = { 'H','e','l','l','o','\0' };
+    for (int i = 0; i < 6; i++)
+    {
+        printf("%c", greeting[i]);
+    }
+
+    //指针混合字符串法
+    char* p = "Hello";
+    printf("p=%s", p);//%s用于输出字符串
+
+    return 0;
+}
+```
+### C指针数组
+[来自菜鸟教程](https://www.runoob.com/cprogramming/c-array-of-pointers.html)
+```c
+#include <stdio.h>
+ 
+const int MAX = 4;
+ 
+int main ()
+{
+   const char *names[] = {
+                   "Zara Ali",
+                   "Hina Ali",
+                   "Nuha Ali",
+                   "Sara Ali",
+   };
+   int i = 0;
+ 
+   for ( i = 0; i < MAX; i++)
+   {
+      printf("Value of names[%d] = %s\n", i, names[i] );
+   }
+   return 0;
+}
+```
+
+## 多级指针：写游戏外挂肯定会用到
+### 示例
+```c
+#include <stdio.h>
+
+const int MAX = 3;
+
+int main()
+{
+    //多级指针：套娃(快捷方式的快捷方式)
+    int number = 100;
+    int* p_one = &number;
+    int** p_two = &p_one;//有两个*，注意！
+
+    //拿到100的方式
+    printf("%d\n", **p_two);
+    return 0;
+}
+```
+
+## 函数参数使用指针
+[传送门](https://www.runoob.com/cprogramming/c-passing-pointers-to-functions.html)
