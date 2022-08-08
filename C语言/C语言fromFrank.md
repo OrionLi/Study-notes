@@ -893,7 +893,7 @@ void exchange(int* num_a, int* num_b) {
 }
 ```
 
-## 指针作为函数返回值
+## 指针作为函数返回值（好例子）
 ```c
 //字符串操作多用指针
 #include <stdio.h>
