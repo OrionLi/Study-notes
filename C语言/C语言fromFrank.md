@@ -838,4 +838,121 @@ int main()
 ```
 
 ## 函数参数使用指针
+==在这个例子里这确实不是最简单的方式，但是他教你的也不是如何写最简单的代码，他只是告诉你这个指针怎么用==
+==看标题他是在举例子教我们函数参数使用指针别再纠结方不方便了==
 [传送门](https://www.runoob.com/cprogramming/c-passing-pointers-to-functions.html)
+### 引例（错误的）
+```javascript {.line-numbers}
+#include <stdio.h>
+
+void exchange(int num_a, int num_b);
+
+int main()
+{
+    int a = 2, b = 5;
+    exchange(2, 5);
+
+    printf("a=%d,b=%d\n", a, b);
+    return 0;
+}
+
+void exchange(int num_a, int num_b) {
+    int temp;
+    temp = num_a;
+    num_a = num_b;
+    num_b = temp;
+    //是两个国家的人，传不过去
+}
+```
+
+### 正确做法（交换地址？）
+```javascript {.line-numbers}
+//指针在函数中作为参数在传递，就相当于一个护照
+/*弹幕：我觉得是因为只换数的话，他在函数中只是计算，
+和这个变量没关系，变量起的只是一个将数带进去的作用，
+所以在main中没交换；而指针是指的一个内存位置，
+而不是一个数，换句话说在函数中此时做的不是数的交换*/
+#include <stdio.h>
+
+void exchange(int* num_a, int* num_b);
+
+int main()
+{
+    int a = 2, b = 5;
+    exchange(&a, &b);
+    
+    printf("a=%d,b=%d\n", a, b);
+    return 0;
+}
+
+void exchange(int* num_a, int* num_b) {
+    int temp;
+    temp = *num_a;
+    *num_a = *num_b;
+    *num_b = temp;
+}
+```
+
+## 指针作为函数返回值
+```c
+//字符串操作多用指针
+#include <stdio.h>
+#include <string.h>
+
+//声明函数：返回长度最长的字符串
+char* strlong(char* str1, char* str2) {
+    if (strlen(str1) >= strlen(str2)) {
+        return str1;
+    }
+    else {
+        return str2;
+    }
+}
+
+int main() {
+    char str1[30], str2[30], * str;//定义了两个字符串
+    gets(str1);//直接从键盘上获取
+    gets(str2);
+    str = strlong(str1, str2);
+    printf("Longer string: %s\n", str);
+
+    return 0;
+}
+```
+
+---
+
+# Frank教程忽略的一些内容
+1. 递归，老师肯定会讲，没什么好讲的，记得斐波那契数列就行
+2. 字符串老师会讲
+3. 结构体（在面向对象时叫做类）就是一个类别，老师也会讲，菜鸟那讲得不好，去看那本书
+4. 共用体老师不讲
+5. 位域：对C语言有兴趣可以去看看
+6. typedef学结构体时会讲
+7. 文件读写：记住读写就行，看书，==记住固定格式==
+8. 强制类型转换
+9. 错误处理，在读写文件时可以引用这个模块，但要记得加头文件
+10. 内存管理：==若是把C语言作为入门的编程语言，那动态内存的分配可以了解一下（菜鸟有，书上应该挺详细），考试可能会遇到==
+11. 命令行参数，有兴趣可以研究
+12. ==不要浮躁==
+
+# 一些散话
+## 可变参数
+想传多个参数（不知道有几个）
+固定格式
+## 命令行参数
+让其可以在cmd里用
+## 预处理器：有兴趣就看
+看一下
+一般和C的头文件配合去使用（也可以自己创建头文件）
+## 库函数
+sqrt(9)，默认括号内为double类型，返回double类型数据，所以用double类型接收
+
+# 完结撒花，Frank想说的话
+精英总是少数的，精英学完C之后不会沉溺于此，而会去找到适合自己的方向
+现在是BS的时代，如果要走BS开发的话，一定要知道接下来选择的方向。
+有些人学完C就去学C++，殊不知C++的岗位少之又少，对人能力要求高，所以不要去无脑学习。
+知识是无限的，但==人总要精通某一方向的领域==
+所以，一定要知道接下来要选择什么岗位，学什么东西
+==人只有4年，决定好自己的方向==
+==趁年轻，多学习，多努力，以后你至少还有选择的权利！==
