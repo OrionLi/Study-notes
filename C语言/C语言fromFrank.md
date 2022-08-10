@@ -46,6 +46,7 @@ printf("a = %d, b = %d\n", a, b);
 
 
 ## 常量
+>int change = AMOUNT - price 比 100 - price更易理解
 
 ### 宏定义：给某事物下定义，不用加等号
 >#define PI 3.14
@@ -389,7 +390,8 @@ int main(void)
 	int row, column;
 	for (row = 1; row <= 9; row++) {
 		for (column = 1; column <= 9; column++) {
-			printf("%d*%d=%2d\t", row, column, row* column);//%d是一位数，%2d是两位数，这里要注意一下
+			printf("%d * %d=%2d\t", row, column, row * column);/*使输出的int型的数值以2位的固定位宽输出。
+			如果不足2位，则在前面补空格；如果超过2位，则按实际位数输出，这里要注意一下*/
 		}
 		printf("\n");//一行column执行完后换下一行
 	}
