@@ -7,7 +7,7 @@
  * double
  * printf("%f",...)
  * scanf_s("%lf",...)
-  
+
 # 表达式
 计算时间差
 ```c
@@ -41,3 +41,30 @@ printf("%d和%d的平均值=%f\n",a ,b ,c);
 算术运算 > 关系运算符 > 赋值运算 > ==和!=
 > 对6>5>4，6>5正确，返回1，1>4错误，返回0
 > a == b == 6也是如此
+
+# 嵌套if-else练习
+```c
+#include<stdio.h>
+
+int main(void)
+{
+	int a, b, c;
+	scanf_s("%d %d %d", &a, &b, &c);
+
+	int max = 0;
+
+	if (a > b)
+	{
+		if (a > c)
+		{max = a;}
+		else { max = c; }
+	}
+	else {
+		if (b > c) {max = b;}
+		else { max = c; }
+	}
+	printf("max = %d", max);//单一出口：最后printf一次那就好了
+	return 0;
+}
+```
+

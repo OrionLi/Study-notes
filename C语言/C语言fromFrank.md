@@ -112,7 +112,8 @@ return 0后，程序结束，不再执行后面语句
 
 ---
 
-# else if：要不然
+# else if：要不然 (级联if-elseif)
+
 ```c
 #include<stdio.h>
 int main(void) {
@@ -150,8 +151,12 @@ int main(void) {
 ```
 ---
 # switch语句
+
+==只能int==
+
 当对同一个变量进行判断操作，选择某些条件的时候，此时switch可能是最佳选择（一个变量满足多种判断）
 写法：每写一个case后面都要跟一个break
+
 ## 示例
 ```c
 #include<stdio.h>
