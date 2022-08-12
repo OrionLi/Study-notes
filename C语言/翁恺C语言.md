@@ -124,5 +124,57 @@ printf("log2 of %d is %d", t, ret);
 return 0;
 ```
 
+# 数字炸弹
+```c
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+
+//随机数 
+int main()
+{
+	srand((unsigned)time(NULL));//用于改变rand
+
+	int 随机值;
+	int 首数;
+	int 尾数;
+	int 还原专用;
+	int 输入值 = 0;//用户输入的数
+
+	//初始化
+	printf("请输入首数\n");
+	scanf_s("%d", &首数);
+	printf("请输入末数\n");
+	scanf_s("%d", &尾数);
+	随机值 = (rand() % (尾数 - 首数 + 1) + 首数);
+
+	printf("数字在%d到%d间\n", 首数, 尾数);
+	printf("请输入区间内的一个数\n");
+	scanf_s("%d", &输入值);
+	while (输入值 != 随机值)
+	{
+		while ((输入值 < 首数) || (输入值 > 尾数))
+		{
+			printf("输入不合法，请重新输入\n");
+			scanf_s("%d", &输入值);
+		}
+		if (输入值 < 随机值)
+		{
+			首数 = 输入值;
+			printf("数字在%d到%d间", 输入值, 尾数);
+		}
+		else
+		{
+			尾数 = 输入值;
+			printf("数字在%d到%d间", 首数, 输入值);
+		}
+		printf("请输入区间内的一个数\n");
+		scanf_s("%d", &输入值);
+	}
+	printf("恭喜你中了！随机数就是%d\n", 随机值);
+	return 0;
+}
+```
+
 
 
