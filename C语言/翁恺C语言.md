@@ -68,3 +68,61 @@ int main(void)
 }
 ```
 
+# if和else if的区别
+
+你写的不是关系，不是说明，而是步骤
+
+```c
+#include<stdio.h>
+
+int main(void)
+{
+	int age;
+	printf("please input your age\n");
+	scanf_s("%d", &age);
+	if (age > 999) { printf("是四位数\n"); }
+	else if (age > 99) { printf("是三位数\n"); }
+	else if (age > 9) { printf("是两位数\n"); }
+	return 0;
+}
+```
+
+上面的else if若换成if，则程序会一直判断下去，而else if如果符合，直接跳出判断
+
+# while小练习
+
+```c
+#include<stdio.h>
+
+int main(void)
+{
+	int 数字;
+	int 位数 = 0;
+	printf("请输入数字\n");
+	scanf_s("%d", &数字);
+	if (数字 < 0) { 数字 = -数字; }
+	while (数字 > 0)
+	{
+		位数++;
+		数字 = 数字 / 10;
+	}
+	printf("这是%d位数\n", 位数);
+	return 0;
+}
+```
+
+# 计算前保留原始数据
+
+```c
+int x;
+int ret = 0;
+
+scanf_s("%d", &x);
+int t = x;//t用于储存x初始值
+while (x>1) {x /= 2; ret++;}
+printf("log2 of %d is %d", t, ret);
+return 0;
+```
+
+
+

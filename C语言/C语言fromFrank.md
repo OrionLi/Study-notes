@@ -25,7 +25,7 @@ for后先空格再括号
 
 换行一般用\n，\t是4个空格（和前后连在一起也没什么关系）
 
-C语言没有布尔类型
+C语言没有布尔类型，计算机不看回车
 
 ---
 
@@ -170,7 +170,7 @@ int main(void) {
 	switch (floor) {
 		case 4:
 			printf("You are on the fourth floor!\n");
-			break;//break：到了，出去了。没有break就相当于按了电梯，但是到了该到的楼层不出去
+			break;//break：到了，出去了。没有break就相当于按了电梯，但是到了该到的楼层不出去，那就会接着往下执行
 
 		case 5:
 			printf("You are on the fifth floor!\n");
