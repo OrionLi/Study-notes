@@ -206,7 +206,7 @@ int main(void) {
 
 ---
 # while循环
-当while里面为假时才不会执行循环
+当while里面为真时才会执行循环
 ## 示例
 ```c
 #include <stdio.h>
