@@ -127,6 +127,7 @@ return 0;
 # 数字炸弹
 [随机数进阶教程](https://cubox.pro/my/card?id=ff808081828c15960182916422985e03)
 
+**初代：存在bug，留作纪念**
 ```c
 #include <stdlib.h>
 #include <stdio.h>
@@ -185,6 +186,47 @@ int main()
 	return 0;
 }
 ```
+终版：还是拦不了除数字以外的数
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+int main()
+{
+	srand((unsigned)time(NULL));
+	int first;
+	int last;
+	int input;
+	int random;
+//检验首尾数合法性
+	do {
+		printf("Please input the first number:\n");
+		scanf_s("%d", &first);
+		printf("Please input the last number:\n");
+		scanf_s("%d", &last);
+	} while ((last - first) < 3);
+//生成范围内随机数
+	random = (rand() % ((last - 1) - (first)+1) + first);
+//执行循环，直到猜中数
+	do {
+		printf("please input a numbei between %d and %d\n", first, last);
+		scanf_s("%d", &input);
+		if ((input < first) || (input > last)) {
+			continue;//如果输入不合法，直接抛弃这次的输入内容,进行下一轮输入
+		}
+		(input < random) ? (first = input) : (last = input);//三元运算符要加括号
+	} while (((last - first) > 2) && (input != random));
+
+	printf("没错，那个数就是%d\n", random);
+
+	return 0;
+}
+```
+
+
+
 # 随机数
 每次召唤rand()就得到一个随机的整数
 ## 取余
