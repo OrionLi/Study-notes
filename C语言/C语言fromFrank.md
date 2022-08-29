@@ -724,6 +724,11 @@ int main(void) {
 p就是快捷方式，* p就是双击，也就是说写了 * 就代表你要用这个快捷方式了（100）
 &表示从数值读取地址，* 表示从地址读取数据（*就是去地址符）
 带星号就是数，不带就是地址呗==
+
+（**在cpp中， &叫引用， *叫做解引用**）
+
+int i，scanf_s传数字时不加&，scanf_s会把你输入的值存到一个地址为6的地方去了，而不是i那里
+
 ```javascript {.line-numbers}
 int number = 100;
 int *p = number;
@@ -790,12 +795,12 @@ int main()
     char greeting[6] = { 'H','e','l','l','o','\0' };
     for (int i = 0; i < 6; i++)
     {
-        printf("%c", greeting[i]);
+        printf("%c", greeting[i]);//%c是字符型格式符
     }
 
     //指针混合字符串法
-    char* p = "Hello";
-    printf("p=%s", p);//%s用于输出字符串
+    const char* p = "Hello";//vs2022提示需要const char* 而非char*
+    printf("p=%s", p);//%s用于输出字符串（字符串型格式符）
 
     return 0;
 }
