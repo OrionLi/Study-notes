@@ -444,6 +444,8 @@ age大于等于20：
 
 # 数组
 
+==数组作为参数传入的是地址不能用sizeof==
+
 ## 基础
 
 * ==数组中所有的元素具有相同的数据类型==
@@ -583,6 +585,15 @@ int main(void)
 个人的思考：检查对角线
 
 # 指针
+==1、int* p=&a的意思是：将a的地址赋给指针p==
+
+==2、int *p=a的意思：把a的值放到p指的地方去==
+
+[*p=a和p=&a](https://www.cnblogs.com/storml/p/7766702.html)
+(1)==int* p=&a==就是用a的地址对p赋值，&p不改变，变的是p：==p放着a的地址，printf("%p", p);或者printf("%d", *p)==，==就是个快捷方式==
+(2) ==int *p=a==就是把p所指向的那一内存空间的值赋值为a，&p和p都不改变，变的是p所指向的那一内存空间的值：==p指着值为a的地方（a的备份），printf("%s", p);==
+
+
 ## 用途
 1. 交换数值
 2. * 函数返回多个值，某些值就只能通过指针返回
@@ -622,3 +633,338 @@ int main(void)
 * 重复free也会导致崩溃
 * 地址变过再去free也是没有用的
 
+# 字符串
+
+字符数组 char word[] ={'H','e','l','l','o'};
+
+字符串 char word[] ={'H','e','l','l','o','\0'};
+* 以0结尾的一串字符
+	* 0或者'\0'是一样的，但是和'0'不同
+* 0标志字符串的结束，但它不是字符串的一部分
+	* 计算字符串长度的时候不包含这个0
+* 字符串以数组的形式存在，以数组或指针的形式访问
+	* 更多的是以指针的形式
+* string.h里有很多处理字符串第函数
+* 字符串结尾的"\0"不是字符串的一部分，但是要占掉字符数组的一个元素，并且不计入字符数组的长度
+
+## 字符串常量
+> char* s = "Hello,World!";
+> s是一个指针，初始化指向一个字符串常量
+
+字符串位于代码段，它是只读的，如果硬写会触发保护机制导致error，事实上，用数组定义的字符串前默认带了一个const
+
+如果需要修改字符串，应该用数组
+> char s[] = "Hello World!";==[]意思是按照双引号中的字符数量来定义数组大小==
+
+**用指针是指向原数据本身，是不能修改的。
+用数组，其实是把数据拷贝进去做一个备份，对备份是可以修改的**
+
+### 所以，用指针还是数组呢
+
+* 数组：这个字符串在这里
+  * 构建一个字符串
+  * 作为本地变量空间被自动回收
+* 指针：这个字符串不知道在哪里
+  * 处理一个字符串
+  * 处理参数
+  * 动态分配空间（要malloc） 
+
+## 使用字符串输入输出
+
+* char string[8];
+
+  > 定义一个长8个字节的字符串
+  >
+  > 在ASCII和UTF-8编码中，一个英文字符占一个字节的空间
+
+* scanf_s("%s", string);==不用加&号！==
+
+  > scanf是读到空格、tab或回车为止
+  >
+  > 但是scanf是不安全的，因为不知道要读入的内容的长度（所以VS2022有了scanf_s，当然，你写%7s这种限制位数也行）
+
+* printf("%s",string);
+
+### 常见错误
+
+对于以下代码
+
+```c
+char *string;
+scanf_s("%s",string);
+```
+
+由于没有初始化本地变量string，所以就成了个野指针输出垃圾
+
+应该这么做
+
+```c
+char *string = NULL;
+scanf_s("%s",string);
+```
+
+### 空字符串
+
+* char buffer[100] = "";
+  * 这是一个空字符串，且buffer[0] == '\0'
+* char buffer[] = "";
+  * 这个数组的长度只有1，buffer[0]就是0，放不下其他东西了
+
+### C语言指针数组输出月份 (摘自CSDN)
+
+```c
+//给出一个1-12的整数，返回给定月份的英文名称
+#include <stdio.h>
+
+char *getmonth(int n);
+
+int main()
+{
+    int n;
+    char *s;
+    char *p = NULL;
+    scanf("%d", &n);
+    s = getmonth(n);
+    if (s == NULL)
+        printf("wrong input!\n");
+    else
+        printf("%s\n", s);
+    return 0;
+}
+char *getmonth(int n)
+{
+    //指针数组
+    char *month[13] = {"0", "January", "February", "March", "April", "May",
+                          "June", "July", "August", "September", "October", "November", "December"};
+    if (n > 0 && n < 13)
+    {
+        return month[n];
+    }
+    return NULL;
+}
+
+```
+
+char *c[]是指针数组
+
+==注意，高维数组要定义列==
+
+用户输入先到shell缓冲区，再被读
+
+## string.h
+
+### strlen：返回字符串长度（不包括结尾的0）
+
+```c
+size_t strlen(const char *s);//返回s的字符串长度（不包括结尾的0）
+```
+
+```c
+#include<stdio.h>
+#include<string.h>
+
+int main(int argc, char const *argv[])
+{
+    char line[] = "Hello";
+    printf("strlen=%lu\n", strlen(line));
+    printf("sizeof=%lu\n", sizeof(line));
+    
+    return 0;
+}
+```
+
+### strcmp：比较2个字符串，返回：
+
+* 0：s1==s2
+* 1：s1>s2
+* -1：si<s2
+
+```c
+#include<stdio.h>
+#include<string.h>
+
+int main(int argc, char const *argv[])
+{
+    char s1[] = "abc";
+    char s2[] = "bbc";
+    printf("%d\n", strcmp(s1,s2));
+    
+    if ( strcmp(s1, s2) == 0) {
+        
+    }
+    return 0;
+}
+```
+
+### 字符串中找字符
+
+* 从左到右寻找C第一次出现的位置：char* strchr(const char *s, int c*);
+* 从右到左寻找C第一次出现的位置：char* strrchr(const char *s, int c*);
+* 返回NULL表示没找到
+
+```c
+#include<stdio.h>
+#include<string.h>
+
+int main(int argc, char const *argv[])
+{
+    char line[] = "Hello";
+    char *p = strchr(s,'l');//这时返回的是llo
+    p = strchr(p+1, 'l');//这时返回的是lo
+    printf("%s\n", p);
+    
+    return 0;
+}
+```
+
+```c
+#include<stdio.h>
+#include<string.h>
+
+int main(int argc, char const *argv[])
+{
+    char line[] = "Hello";
+    char *p = strchr(s,'l');//这时返回的是llo
+    char *t = (char*)malloc(strlen(p)+1);//如果想把l后面的都复制掉（加1是为了放结尾的那个0
+    strcpy(t,p);
+    printf("%s\n", t);
+    free(t);
+    
+    return 0;
+}
+```
+
+```c
+#include<stdio.h>
+#include<string.h>
+
+int main(int argc, char const *argv[])
+{
+    char line[] = "Hello";
+    char *p = strchr(s,'l');//这时返回的是llo
+    char c = *p;//通过p找到l（p指向l）
+    *p = '\0';
+    char *t = (char*)malloc(strlen(p)+1);//如果想复制l前面的
+    strcpy(t,s);//把He拷贝到t那里去
+    printf("%s\n", t);
+    *p = c;//把l还回去
+    free(t);
+    
+    return 0;
+}
+```
+
+### 字符串中找字符串
+
+* char *strstr(const char *s1, const char *s2);
+* char *strcasestr(const char *s1, const char *s2);可以在上面的基础上忽略大小写
+
+# 枚举
+
+以翁恺的一个指针示例来入题：
+
+```c
+#include<stdio.h>
+
+enum COLUR {RED, YELLOW, GREEN};
+
+int main(int argc, char const *argc[])
+{
+    int color = -1;
+    char *colour_name = NULL;//还没想好指谁
+    
+    printf("输入你最喜欢的颜色的代码：");
+    scanf_s("%d",&color);
+    switch(color){
+        case RED:color_name = "red";break;
+        case YELLOW:color_name = "yellow";break;
+        case GREEN:color_name = "green";break;    
+        default:color_name = "unknown";break;    
+    }
+    printf("你最喜欢的颜色是%s\n",color_name);
+    
+    return 0;
+}
+```
+
+现在来用枚举
+
+```c
+#include<stdio.h>
+
+enum COLUR {RED, YELLOW, GREEN};//用枚举而非定义独立的const int变量，现在RED，YELLOEW，GREEN值依次是0，1，2
+
+void f(enum color c);
+
+int main(void)
+{
+    enum color t = red;
+    scanf("%d",&t);
+    f(t);//把t传给函数
+    
+    return 0;
+}
+
+void f(enum color c)
+{
+    printf("%d\n",c);
+}
+```
+
+## 套路：自动计数的枚举
+
+```c
+#include<stdio.h>
+
+enum COLUR { RED, YELLOW, GREEN, NumCOLORS };
+
+int main(int argc, char const* argv[])
+{
+    int color = -1;
+    char* ColorNames[NumCOLORS] = {
+        "red", "yellow" ,"green",
+    };//这个分号别漏了
+    char *ColorName = NULL;
+
+    printf("输入你最喜欢的颜色的代码：");
+    scanf_s("%d", &color);
+    if (color >= 0 && color < NumCOLORS) { ColorName = ColorNames[color]; }
+    else { ColorName = "unknown"; }
+    printf("你最喜欢的颜色是%s\n", ColorName);
+
+    return 0;
+}
+```
+
+## 枚举量
+
+* 声明枚举量时可以指定值
+
+  > enum COLOR {RED = 1, YELLOW, GREEN = 5};
+
+# 结构
+![](images/2022-08-31-17-15-13.png)
+==通常把声明放在所有函数的外面，让它在所有函数都能使用==
+类型struct date，名字today
+
+![](images/2022-08-31-17-30-10.png)
+![](images/2022-08-31-19-25-26.png)
+![](images/2022-08-31-19-33-01.png)
+![](images/2022-08-31-19-31-19.png)
+## 结构指针
+* 和数组不同，结构变量的名字并不是结构变量的地址，必须使用&运算符
+* struct date *pDate = &today
+
+## 结构与函数
+![](images/2022-08-31-20-29-39.png)
+输入12 30会得到12 300, 0
+作为局部变量，返回的只是一个输出值，而非赋值（输出x，y的值）
+==本地变量在离开那个函数的时候会消失掉==
+### 解决下策：传结构
+[](images/2022-08-31-20-37-30.png)
+
+### 解决上策：传指针
+![](images/2022-08-31-20-56-52.png)
+*get struck是指定义一个名字叫getstruct的结构体指针
+*p就是要指针，所以上面&y给了指针，然后得到p指的结构的x和y
+传进去一个指针，对指针指的东西处理之后，
