@@ -25,7 +25,7 @@ for循环：fori然后回车
 侧栏展开：alt+1
 快速对齐：Ctrl+Alt+L
 快速生成变量：CTRL+ALT+V或者在没加分号时句末加.var
-主函数：psvm
+主函数：psvm或者main
 输出离它最近的那个变量：soutv+回车
 多行注释：/*+回车
 快捷注释：ctrl+/
@@ -152,7 +152,7 @@ for(int element: arr_1) {
 ```java
 package com.google;
 
-import java.util.Arrays;
+import java.util.Arrays; 
 
 public class Main {
     public static void main(String[] args){
@@ -240,5 +240,146 @@ public class Main {
 从Java中数组中也可见一斑
 > Arrays.sort()中括号填什么类型都可以
 
-# 命名规范
- 
+---
+
+* 面向过程(POP)：你想去做什么的时候，然后去做了，这就是过程
+  走一步看一步，目标不明确，不适用大众
+* 面向对象(OOP)：大众化，有目标，不强调过程
+  设计思维：先考虑共性：所有该种类都具备的东西
+
+---
+
+# 面向对象
+```java
+package com.microsoft.bean;
+
+// 狗都有这些
+// 类当中的变量和方法都统称为属性（共性、特性）
+public class Dog {
+    // 下面几个是成员变量，他们组成了类，他们也是属性
+    // 狗名字
+    public String name;// 加public让大家都能填
+
+    // 狗种类
+    public String variety;
+
+    // 狗年龄
+    public int age;
+
+    // 这些方法在类当中都叫行为
+    public void eat(){
+        System.out.println(name + "正在吃饭");
+    }
+
+    public void sleep(){
+        System.out.println(name + "正在睡觉");
+    }
+
+    public void sick(){
+        System.out.println(name + "在生病");
+    }
+}
+```
+```java
+import com.microsoft.bean.Dog;
+
+public class ApplicationRun {
+    public static void main(String[] args) {
+        // 张大爷注册
+        Dog zhangDog = new Dog();
+
+        // 设置狗的信息
+        zhangDog.name = "Jerry";
+        zhangDog.age = 2;
+        zhangDog.variety = "拉布拉多";
+
+        //王阿姨注册
+        Dog wangDog = new Dog();
+
+        wangDog.name = "Tom";
+        wangDog.age = 2;
+        wangDog.variety = "藏獒";
+
+        System.out.println("张大爷的狗叫" + zhangDog.name);
+        System.out.println("王阿姨的狗叫" + wangDog.name);
+
+        //张大爷的狗睡觉了
+        zhangDog.sleep();//看到sleep()先找Dog这个类，再找sleep()这个函数
+        //王阿姨的狗在吃饭
+        wangDog.eat();
+    }
+
+}
+
+```
+## 注销账户和null空指针异常
+对象(zhangDog)都没了，如果还操作人家的属性(println name)，那就会NullPointerException，解决办法是不输出它的名字了
+
+## OOP封装(Getter and Setter)
+```java
+package com.microsoft.bean;
+
+public class Dog {
+    // 狗名字
+    private String name;// 加private让用户不能为所欲为
+    // 狗种类
+    private String variety;
+    // 狗年龄
+    private int age;
+
+
+    // 我们要让用户一个能设置，能获取但不能瞎搞 -> getset
+    // this.age是上面private的age，作用对象是zhangDog,int age是用户传进来的age
+    public void setAge(int age) {
+        if (age < 0 || age > 34) {
+            System.out.println("您输入的数据不合法，已经默认清零！");
+            this.age = 0;
+        } else {
+            this.age = age;
+        }
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+
+    /*
+    此时，为了方便给每个成员设置getset，可以使用自动生成的方式
+    alt+insert -> Getter and Setter -> ctrl+a全选 -> 回车
+
+    以下是生成效果
+     */
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVariety() {
+        return variety;
+    }
+
+    public void setVariety(String variety) {
+        this.variety = variety;
+    }
+}
+
+```
+```java
+import com.microsoft.bean.Dog;
+
+public class ApplicationRun {
+    public static void main(String[] args) {
+        Dog zhangDog = new Dog();
+        zhangDog.setAge(14);
+        System.out.println("zhangDog age = " + zhangDog.getAge());
+    }
+}
+
+```
+
+## 内部类（看书，开发基本不会这么写）
+想要让外部访问要加public
