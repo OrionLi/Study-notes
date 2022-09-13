@@ -316,6 +316,7 @@ public class ApplicationRun {
 对象(zhangDog)都没了，如果还操作人家的属性(println name)，那就会NullPointerException，解决办法是不输出它的名字了
 
 ## OOP封装(Getter and Setter)
+封装好让大家直接用，但又不能提供过多的权限导致安全问题
 ```java
 package com.microsoft.bean;
 
@@ -381,5 +382,186 @@ public class ApplicationRun {
 
 ```
 
+## Lombok(==这只是工具，不要忘了getset怎么写==)
+```java
+package com.microsoft.bean;
+
+//下面两行开始时是没有的
+
+import lombok.Getter;
+import lombok.Setter;
+
+//看下面！（这俩建议写类上面）
+@Getter
+/*
+先在最大的文件夹下新建个目录叫jar，
+拖lombok...jar文件进去，右键添加为库，
+ok，alt+shift+回车
+*/
+@Setter//现在按alt + 回车
+
+public class Dog {
+    // 狗名字
+    private String name;
+    // 狗种类
+    private String variety;
+    // 狗年龄
+    private int age;
+
+    //特殊的单独写就行了：方法的重写
+    public void setAge(int age) {
+        if (age < 0 || age > 34) {
+            System.out.println("您输入的数据不合法，已经默认清零！");
+            this.age = 0;
+        } else {
+            this.age = age;
+        }
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+
+}
+
+```
+```java
+import com.microsoft.bean.Dog;
+
+public class ApplicationRun {
+    public static void main(String[] args) {
+        Dog zhangDog = new Dog();
+        zhangDog.setAge(-14);
+        System.out.println("zhangDog age = " + zhangDog.getAge());
+    }
+}
+
+```
+
+## toString()
+Dog模块
+法一（不依赖Lombok）
+```java
+package com.microsoft.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+
+public class Dog {
+    // 狗名字
+    private String name;
+    // 狗种类
+    private String variety;
+    // 狗年龄
+    private int age;
+    private String food;
+
+    public void setAge(int age) {
+        if (age < 0 || age > 34) {
+            System.out.println("您输入的数据不合法，已经默认清零！");
+            this.age = 0;
+        } else {
+            this.age = age;
+        }
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+
+    //alt + insert选toString
+    //@符号后面添加的叫注解
+    @Override//重写，后面会讲
+    public String toString() {
+        return "Dog{" +
+                "name='" + name + '\'' +
+                ", variety='" + variety + '\'' +
+                ", age=" + age +
+                ", food='" + food + '\'' +
+                '}';
+    }
+}
+
+```
+法二：利用Lombok的@
+```java
+package com.microsoft.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString //看这里！如果还想加上equals()、hashCode()那就直接写@Data
+
+public class Dog {
+    // 狗名字
+    private String name;
+    // 狗种类
+    private String variety;
+    // 狗年龄
+    private int age;
+    private String food;
+
+    public void setAge(int age) {
+        if (age < 0 || age > 34) {
+            System.out.println("您输入的数据不合法，已经默认清零！");
+            this.age = 0;
+        } else {
+            this.age = age;
+        }
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+    //后面就不用啦
+}
+
+```
+ApplicationRun模块
+```java
+import com.microsoft.bean.Dog;
+
+public class ApplicationRun {
+    public static void main(String[] args) {
+        Dog zhangDog = new Dog();
+        zhangDog.setName("Jerry");
+        zhangDog.setVariety("拉布拉多");
+        zhangDog.setAge(10);
+        System.out.println("zhangDog = " + zhangDog);//这里直接println zhangDog
+    }
+}
+
+```
+
+## 构造方法
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 内部类（看书，开发基本不会这么写）
+==一个文件只能有一个public的class，所以直接写class==
 想要让外部访问要加public
