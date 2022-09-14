@@ -562,32 +562,32 @@ public class Application {
     ```
 * ```java
     package com.microsoft.bean;
-
+    
     import lombok.Getter;
     import lombok.Setter;
     import lombok.ToString;
-
+    
     @Getter
     @Setter
     @ToString//看这里！
-
+    
     public class Dog {
         private String name;
         private String variety;
         private int age;
         private String food;
-
+    
         // 构造方法别加类型，所以也别加void
         //可能会有人啥都不想填，所以先留着
         public Dog() {
-
+    
         }
         /*
         只要创建类如Dog zhangDog = new Dog()，
         就默认无参数构造上面这种函数,又称无参构造器
         但此例下面还写了个有参构造器，所以必须创建
         */
-
+    
         //下面这里，alt + insert构造函数
         public Dog(String name, String variety, int age, String food) {
             this.name = name;
@@ -596,12 +596,12 @@ public class Application {
             this.food = food;
         }
     }
-
+    
     ```
     ```java
     //可以注册完成之后，再补充资料
     import com.microsoft.bean.Dog;
-
+    
     public class Application {
         public static void main(String[] args) {
         
@@ -609,24 +609,24 @@ public class Application {
             zhangDog.setName("Jerry");
             zhangDog.setVariety("拉布拉多");
             zhangDog.setAge(10);
-
+    
             System.out.println("zhangDog = " + zhangDog);
         }
     }
-
+    
     //也可以一开始就写资料
     import com.microsoft.bean.Dog;
-
+    
     public class Application {
         public static void main(String[] args) {
             Dog zhangDog = new Dog("Jerry","拉布拉多",2,"null");
             System.out.println("zhangDog = " + zhangDog);
         }
     }
-
+    
     ```
-还有件事，看出来下面是啥了吗
-没错，就是==重载==，构造方法也可以重载的
+    还有件事，看出来下面是啥了吗
+    没错，就是==重载==，构造方法也可以重载的
 ```java
 public Dog() {
 
@@ -648,7 +648,7 @@ public Dog(String name, String variety, int age, String food) {
 * > this.age是上面private的age，
     详细来说作用对象zhangDog的age（因为传的是zhangDog）,
     int age是用户传进来的age
-    
+  
     详细用法在OOP封装那节
 * 想要在eat()里调用上面的sleep()
   ```java
@@ -672,6 +672,7 @@ public Dog(String name, String variety, int age, String food) {
 静态的好处是建立在class类上层的，和它的对象根本没关系
 [Java static关键字（静态变量和静态方法）](https://ock.cn/qdirf)
 [比喻版](https://www.zhihu.com/answer/28422467)
+
 ```java
 package com.microsoft.bean;
 
@@ -742,6 +743,9 @@ public class Application {
 用途不多，看书，static包个代码块且只加载一次
 
 ## static单例模式
+
+[几种单例模式](https://zhuanlan.zhihu.com/p/105586046)
+
 ？？？？
 
 
