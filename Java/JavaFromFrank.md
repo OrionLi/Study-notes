@@ -283,7 +283,7 @@ public class Dog {
 ```java
 import com.microsoft.bean.Dog;
 
-public class ApplicationRun {
+public class Application {
     public static void main(String[] args) {
         // 张大爷注册
         Dog zhangDog = new Dog();
@@ -330,7 +330,11 @@ public class Dog {
 
 
     // 我们要让用户一个能设置，能获取但不能瞎搞 -> getset
-    // this.age是上面private的age，作用对象是zhangDog,int age是用户传进来的age
+    /* 
+    this.age是上面private的age，
+    详细来说作用对象zhangDog的age（因为传的是zhangDog）,
+    int age是用户传进来的age
+    */
     public void setAge(int age) {
         if (age < 0 || age > 34) {
             System.out.println("您输入的数据不合法，已经默认清零！");
@@ -372,7 +376,7 @@ public class Dog {
 ```java
 import com.microsoft.bean.Dog;
 
-public class ApplicationRun {
+public class Application {
     public static void main(String[] args) {
         Dog zhangDog = new Dog();
         zhangDog.setAge(14);
@@ -428,7 +432,7 @@ public class Dog {
 ```java
 import com.microsoft.bean.Dog;
 
-public class ApplicationRun {
+public class Application {
     public static void main(String[] args) {
         Dog zhangDog = new Dog();
         zhangDog.setAge(-14);
@@ -523,11 +527,11 @@ public class Dog {
 }
 
 ```
-ApplicationRun模块
+Application模块
 ```java
 import com.microsoft.bean.Dog;
 
-public class ApplicationRun {
+public class Application {
     public static void main(String[] args) {
         Dog zhangDog = new Dog();
         zhangDog.setName("Jerry");
@@ -539,10 +543,206 @@ public class ApplicationRun {
 
 ```
 
-## 构造方法
+## 构造方法（构造器是为了初始化对象）
+* 初始化 定义+使用
+  ```java
+    int[] arrDogs = {1,2,3,4};
+  ```
+* 先定义后使用
+  ```java
+    int[] arr = new int[4];
+    arr[0] = 1;
+  ```
 
+### 示例
+* ```java
+    public void Dog() {
+        //空参的构造函数，什么都不传
+    }
+    ```
+* ```java
+    package com.microsoft.bean;
 
+    import lombok.Getter;
+    import lombok.Setter;
+    import lombok.ToString;
 
+    @Getter
+    @Setter
+    @ToString//看这里！
+
+    public class Dog {
+        private String name;
+        private String variety;
+        private int age;
+        private String food;
+
+        // 构造方法别加类型，所以也别加void
+        //可能会有人啥都不想填，所以先留着
+        public Dog() {
+
+        }
+        /*
+        只要创建类如Dog zhangDog = new Dog()，
+        就默认无参数构造上面这种函数,又称无参构造器
+        但此例下面还写了个有参构造器，所以必须创建
+        */
+
+        //下面这里，alt + insert构造函数
+        public Dog(String name, String variety, int age, String food) {
+            this.name = name;
+            this.variety = variety;
+            this.age = age;
+            this.food = food;
+        }
+    }
+
+    ```
+    ```java
+    //可以注册完成之后，再补充资料
+    import com.microsoft.bean.Dog;
+
+    public class Application {
+        public static void main(String[] args) {
+        
+            Dog zhangDog = new Dog();
+            zhangDog.setName("Jerry");
+            zhangDog.setVariety("拉布拉多");
+            zhangDog.setAge(10);
+
+            System.out.println("zhangDog = " + zhangDog);
+        }
+    }
+
+    //也可以一开始就写资料
+    import com.microsoft.bean.Dog;
+
+    public class Application {
+        public static void main(String[] args) {
+            Dog zhangDog = new Dog("Jerry","拉布拉多",2,"null");
+            System.out.println("zhangDog = " + zhangDog);
+        }
+    }
+
+    ```
+还有件事，看出来下面是啥了吗
+没错，就是==重载==，构造方法也可以重载的
+```java
+public Dog() {
+
+}
+public Dog(String food) {
+    this.food = food;
+}
+
+public Dog(String name, String variety, int age, String food) {
+    this.name = name;
+    this.variety = variety;
+    this.age = age;
+    this.food = food;
+}
+```
+## 关于this
+**this指的就是对象**,你不写也行，写了也直接相当于eat=eat，
+前面是private的eat，后面是传进来的eat
+* > this.age是上面private的age，
+    详细来说作用对象zhangDog的age（因为传的是zhangDog）,
+    int age是用户传进来的age
+    
+    详细用法在OOP封装那节
+* 想要在eat()里调用上面的sleep()
+  ```java
+    public void sleep(){
+        System.out.println(name + "正在睡觉");
+    }
+    
+    public void eat(){
+        System.out.println(name + "正在吃饭");
+        this.sleep();
+    }
+  ```
+
+## 垃圾回收
+前文zhangDog = null;的做法并不能真正释放掉
+一般都是自动垃圾回收
+手动需要用System.gc();
+
+## 静态变量和静态方法（立围墙区分自家小区和外来狗）
+静态的东西用户是没法主动获取的
+静态的好处是建立在class类上层的，和它的对象根本没关系
+[Java static关键字（静态变量和静态方法）](https://ock.cn/qdirf)
+[比喻版](https://www.zhihu.com/answer/28422467)
+```java
+package com.microsoft.bean;
+
+public class Dog {
+    //小区名,不加public那边看不到
+    public static String plot = "NanG";
+    /*
+    现在用Application的都是NanG小区的，
+    就算没有狗了也会说明系统是给小区用的
+    这就是静态变量
+     */
+
+    //静态方法：小区里所有狗都得打针，王大爷不愿意也得让他的狗打
+    public static void injection(){
+        System.out.println("所有的狗，月底打针");
+    }
+}
+```
+```java
+import com.microsoft.bean.Dog;
+
+public class Application {
+    public static void main(String[] args) {
+
+        System.out.println("Dog.plot = " + Dog.plot);//类名.静态属性
+        Dog.injection();
+        /*
+        静态的直接用类名访问，不用加对象了
+        不用像eat(),sleep()那样new个Dog
+         */
+    }
+}
+```
+## private static
+如果在Application模块，有人加入了以下代码，那事儿就大了
+```java
+Dogs.plot = "The hackers came";
+```
+所以还得是private，此时还想发挥静态类名访问的优势，就要这样
+```java
+package com.microsoft.bean;
+
+public class Dog {
+
+    private static String plot = "NanG";
+    
+    public static String getPlot(){
+        return plot;//静态的就不用写this了，程序知道就这一个
+    }
+}
+```
+```java
+import com.microsoft.bean.Dog;
+
+public class Application {
+
+    //现在只能获取了，禁止操作小区
+    public static void main(String[] args) {
+
+        System.out.println("Dog.plot = " + Dog.getPlot());
+
+    }
+}
+
+```
+
+## 静态代码块
+用途不多，看书，static包个代码块且只加载一次
+
+## static单例模式
+？？？？
 
 
 
@@ -565,3 +765,5 @@ public class ApplicationRun {
 ## 内部类（看书，开发基本不会这么写）
 ==一个文件只能有一个public的class，所以直接写class==
 想要让外部访问要加public
+
+##
