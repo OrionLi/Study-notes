@@ -1264,3 +1264,76 @@ public class Application {
 1. 她能够先使用父亲的东西
 2. 用到自己特性的时候，可以再切换回来
 3. 总结来说就是有多个功能
+花弧类
+```java
+package com.microsoft.bean;
+
+// 这是花木兰她爹
+public class HuaHu {
+    /*
+    她爹有她爹的名字，演示方便起见，
+    不用private + getset了，public先
+     */
+    public String name = "HuaHu";
+    public int age = 45;
+
+    // 自我介绍
+    public static void sayMe() {
+//        System.out.println("大家好，我叫" + this.name);哈哈，static不能这么写
+        System.out.println("大家好！我叫HuaHu，今年45");
+    }
+
+    public void fight() {
+        System.out.println("干架！");
+    }
+}
+
+```
+花木兰类
+```java
+package com.microsoft.bean;
+
+public class HuaMuLan extends HuaHu {
+    public String name = "HuaMuLan";
+    public int age = 19;
+
+    public void dressing() {
+        System.out.println("HuaMuLan化妆...");
+    }
+}
+
+```
+Application
+```java
+import com.microsoft.bean.HuaHu;
+import com.microsoft.bean.HuaMuLan;
+
+public class Application {
+    public static void main(String[] args) {
+        // 多态
+
+        // 替父从军
+        //new的是花木兰，但是给的值是花弧
+        //父类new子类->向上转型（替父从军），好处是隐藏自己
+        HuaHu huaHu = new HuaMuLan();//对外说是花弧，实际上是花木兰
+        //用花弧的方式new花木兰
+
+        //打着她爹的名义，所以说自己是花弧
+        System.out.println(huaHu.name);
+        //注解会自动检测，没法讲课，所以不用@ToString
+        System.out.println(huaHu.age);
+
+        HuaHu.sayMe();
+        HuaMuLan.sayMe();//因为没重写，所以用的是她爹的
+
+        huaHu.fight();//发现花弧不能化妆，只能打架
+
+        System.out.println("--------这是分割线---------");
+        //假如仗打完了，做回自己，向下转型
+        HuaMuLan huaMuLan = (HuaMuLan) huaHu;//报错，alt + 回车，强制转换
+        System.out.println(huaMuLan.name);
+        System.out.println(huaMuLan.age);
+        huaMuLan.dressing();
+    }
+}
+```
