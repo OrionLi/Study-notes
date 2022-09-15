@@ -249,13 +249,13 @@ public class Main {
 
 ---
 
-# 面向对象
+# 面向对象：封装、继承、多态
 ```java
 package com.microsoft.bean;
 
 // 狗都有这些
 // 类当中的变量和方法都统称为属性（共性、特性）
-public class Dog {
+public class Dogs {
     // 下面几个是成员变量，他们组成了类，他们也是属性
     // 狗名字
     public String name;// 加public让大家都能填
@@ -281,12 +281,12 @@ public class Dog {
 }
 ```
 ```java
-import com.microsoft.bean.Dog;
+import com.microsoft.bean.Dogs;
 
 public class Application {
     public static void main(String[] args) {
         // 张大爷注册
-        Dog zhangDog = new Dog();
+        Dogs zhangDog = new Dogs();
 
         // 设置狗的信息
         zhangDog.name = "Jerry";
@@ -294,7 +294,7 @@ public class Application {
         zhangDog.variety = "拉布拉多";
 
         //王阿姨注册
-        Dog wangDog = new Dog();
+        Dogs wangDog = new Dogs();
 
         wangDog.name = "Tom";
         wangDog.age = 2;
@@ -304,7 +304,7 @@ public class Application {
         System.out.println("王阿姨的狗叫" + wangDog.name);
 
         //张大爷的狗睡觉了
-        zhangDog.sleep();//看到sleep()先找Dog这个类，再找sleep()这个函数
+        zhangDog.sleep();//看到sleep()先找Dogs这个类，再找sleep()这个函数
         //王阿姨的狗在吃饭
         wangDog.eat();
     }
@@ -320,7 +320,7 @@ public class Application {
 ```java
 package com.microsoft.bean;
 
-public class Dog {
+public class Dogs {
     // 狗名字
     private String name;// 加private让用户不能为所欲为
     // 狗种类
@@ -374,11 +374,11 @@ public class Dog {
 
 ```
 ```java
-import com.microsoft.bean.Dog;
+import com.microsoft.bean.Dogs;
 
 public class Application {
     public static void main(String[] args) {
-        Dog zhangDog = new Dog();
+        Dogs zhangDog = new Dogs();
         zhangDog.setAge(14);
         System.out.println("zhangDog age = " + zhangDog.getAge());
     }
@@ -404,7 +404,7 @@ ok，alt+shift+回车
 */
 @Setter//现在按alt + 回车
 
-public class Dog {
+public class Dogs {
     // 狗名字
     private String name;
     // 狗种类
@@ -430,11 +430,11 @@ public class Dog {
 
 ```
 ```java
-import com.microsoft.bean.Dog;
+import com.microsoft.bean.Dogs;
 
 public class Application {
     public static void main(String[] args) {
-        Dog zhangDog = new Dog();
+        Dogs zhangDog = new Dogs();
         zhangDog.setAge(-14);
         System.out.println("zhangDog age = " + zhangDog.getAge());
     }
@@ -443,7 +443,7 @@ public class Application {
 ```
 
 ## toString()
-Dog模块
+Dogs类
 法一（不依赖Lombok）
 ```java
 package com.microsoft.bean;
@@ -454,7 +454,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class Dog {
+public class Dogs {
     // 狗名字
     private String name;
     // 狗种类
@@ -480,7 +480,7 @@ public class Dog {
     //@符号后面添加的叫注解
     @Override//重写，后面会讲
     public String toString() {
-        return "Dog{" +
+        return "Dogs{" +
                 "name='" + name + '\'' +
                 ", variety='" + variety + '\'' +
                 ", age=" + age +
@@ -502,7 +502,7 @@ import lombok.ToString;
 @Setter
 @ToString //看这里！如果还想加上equals()、hashCode()那就直接写@Data
 
-public class Dog {
+public class Dogs {
     // 狗名字
     private String name;
     // 狗种类
@@ -527,13 +527,13 @@ public class Dog {
 }
 
 ```
-Application模块
+Application类
 ```java
-import com.microsoft.bean.Dog;
+import com.microsoft.bean.Dogs;
 
 public class Application {
     public static void main(String[] args) {
-        Dog zhangDog = new Dog();
+        Dogs zhangDog = new Dogs();
         zhangDog.setName("Jerry");
         zhangDog.setVariety("拉布拉多");
         zhangDog.setAge(10);
@@ -556,7 +556,7 @@ public class Application {
 
 ### 示例
 * ```java
-    public void Dog() {
+    public void Dogs() {
         //空参的构造函数，什么都不传
     }
     ```
@@ -571,7 +571,7 @@ public class Application {
     @Setter
     @ToString//看这里！
     
-    public class Dog {
+    public class Dogs {
         private String name;
         private String variety;
         private int age;
@@ -579,17 +579,17 @@ public class Application {
     
         // 构造方法别加类型，所以也别加void
         //可能会有人啥都不想填，所以先留着
-        public Dog() {
+        public Dogs() {
     
         }
         /*
-        只要创建类如Dog zhangDog = new Dog()，
+        只要创建类如Dogs zhangDog = new Dogs()，
         就默认无参数构造上面这种函数,又称无参构造器
         但此例下面还写了个有参构造器，所以必须创建
         */
     
         //下面这里，alt + insert构造函数
-        public Dog(String name, String variety, int age, String food) {
+        public Dogs(String name, String variety, int age, String food) {
             this.name = name;
             this.variety = variety;
             this.age = age;
@@ -600,12 +600,12 @@ public class Application {
     ```
     ```java
     //可以注册完成之后，再补充资料
-    import com.microsoft.bean.Dog;
+    import com.microsoft.bean.Dogs;
     
     public class Application {
         public static void main(String[] args) {
         
-            Dog zhangDog = new Dog();
+            Dogs zhangDog = new Dogs();
             zhangDog.setName("Jerry");
             zhangDog.setVariety("拉布拉多");
             zhangDog.setAge(10);
@@ -615,11 +615,11 @@ public class Application {
     }
     
     //也可以一开始就写资料
-    import com.microsoft.bean.Dog;
+    import com.microsoft.bean.Dogs;
     
     public class Application {
         public static void main(String[] args) {
-            Dog zhangDog = new Dog("Jerry","拉布拉多",2,"null");
+            Dogs zhangDog = new Dogs("Jerry","拉布拉多",2,"null");
             System.out.println("zhangDog = " + zhangDog);
         }
     }
@@ -628,14 +628,14 @@ public class Application {
     还有件事，看出来下面是啥了吗
     没错，就是==重载==，构造方法也可以重载的
 ```java
-public Dog() {
+public Dogs() {
 
 }
-public Dog(String food) {
+public Dogs(String food) {
     this.food = food;
 }
 
-public Dog(String name, String variety, int age, String food) {
+public Dogs(String name, String variety, int age, String food) {
     this.name = name;
     this.variety = variety;
     this.age = age;
@@ -676,9 +676,9 @@ public Dog(String name, String variety, int age, String food) {
 ```java
 package com.microsoft.bean;
 
-public class Dog {
+public class Dogs {
     //小区名,不加public那边看不到
-    public static String plot = "NanG";
+    public static String community = "NanG";
     /*
     现在用Application的都是NanG小区的，
     就算没有狗了也会说明系统是给小区用的
@@ -692,51 +692,50 @@ public class Dog {
 }
 ```
 ```java
-import com.microsoft.bean.Dog;
+import com.microsoft.bean.Dogs;
 
 public class Application {
     public static void main(String[] args) {
 
-        System.out.println("Dog.plot = " + Dog.plot);//类名.静态属性
-        Dog.injection();
+        System.out.println("Dogs.community = " + Dogs.community);//类名.静态属性
+        Dogs.injection();
         /*
         静态的直接用类名访问，不用加对象了
-        不用像eat(),sleep()那样new个Dog
+        不用像eat(),sleep()那样new个Dogs
          */
     }
 }
 ```
 ## private static
-如果在Application模块，有人加入了以下代码，那事儿就大了
+如果在Application类，有人加入了以下代码，那事儿就大了
 ```java
-Dogs.plot = "The hackers came";
+Dogs.community = "The hackers came";
 ```
 所以还得是private，此时还想发挥静态类名访问的优势，就要这样
 ```java
 package com.microsoft.bean;
 
-public class Dog {
+public class Dogs {
 
-    private static String plot = "NanG";
+    private static String community = "NanG";
     
-    public static String getPlot(){
-        return plot;//静态的就不用写this了，程序知道就这一个
+    public static String getCommunity(){
+        return community;//静态的就不用写this了，程序知道就这一个
     }
 }
 ```
 ```java
-import com.microsoft.bean.Dog;
+import com.microsoft.bean.Dogs;
 
 public class Application {
 
     //现在只能获取了，禁止操作小区
     public static void main(String[] args) {
 
-        System.out.println("Dog.plot = " + Dog.getPlot());
+        System.out.println("Dogs.community = " + Dogs.getCommunity());
 
     }
 }
-
 ```
 
 ## 静态代码块
@@ -771,10 +770,9 @@ public class Earth {
         System.out.println("hello");
     }
 }
-
 ```
 ```java
-import com.microsoft.bean.Dog;
+import com.microsoft.bean.Dogs;
 import com.microsoft.bean.Earth;
 
 public class Application {
@@ -786,28 +784,483 @@ public class Application {
 
     }
 }
-
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## 内部类（看书，开发基本不会这么写）
 ==一个文件只能有一个public的class，所以直接写class==
 想要让外部访问要加public
 
-##
+## 需求重定义 -> 继承
+如果养猫的和养老鼠的也想让系统管管
+产生矛盾：
+* 用一个类—>有特性
+* 不用一个类->有共性
+Animal类
+```java
+package com.microsoft.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class Animal {
+    private String name;
+
+    private String variety;
+
+    private int age;
+
+    private String food;
+
+    public void eat() {
+        System.out.println(name + "正在吃饭");
+    }
+
+    public void sleep() {
+        System.out.println(name + "正在睡觉");
+    }
+
+    public void sick() {
+        System.out.println(name + "在生病");
+    }
+
+    private static String community = "NanG";
+
+    public static String getCommunity() {
+        return community;//静态的就不用写this了，程序知道就这一个
+    }
+
+    public static void injection() {
+        System.out.println("所有的动物，月底打针");
+    }
+}
+```
+Dogs类
+```java
+package com.microsoft.bean;
+//继承
+//子类 extends 父类
+public class Dogs extends Animal {
+
+}
+```
+Cats类
+```java
+package com.microsoft.bean;
+
+public class Cats extends Animal {
+    
+}
+```
+Application类
+```java
+import com.microsoft.bean.Cats;
+import com.microsoft.bean.Dogs;
+
+public class Application {
+    public static void main(String[] args) {
+        Dogs zhangDog = new Dogs();
+        zhangDog.setName("Jerry");
+        zhangDog.setAge(2);
+        System.out.println("zhangDog = " + zhangDog);
+
+        Cats liCat = new Cats();
+        liCat.setName("Tom");
+        liCat.setAge(3);
+        System.out.println("liCat = " + liCat);
+
+        zhangDog.sleep();
+        liCat.eat();
+    }
+}
+```
+## 多层继承
+==只能爹继承爷，儿子继承爹，不能儿子同时继承爷和爹==
+Larbrador
+```java
+package com.microsoft.bean;
+
+public class Labrador extends Dogs{
+}
+
+```
+Application
+```java
+import com.microsoft.bean.Labrador;
+
+public class Application {
+    public static void main(String[] args) {
+
+        Labrador labrador = new Labrador();
+        labrador.setAge(5);
+        System.out.println("labrador = " + labrador);
+
+    }
+}
+```
+## 方法的重写
+参数类型或数量不同才是重载
+和继承有关的才是重写，好处是可以让子类创造出不同于父类的、而是自己的方法
+Animal类
+```java
+package com.microsoft.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class Animal {
+    private String name;
+
+    private String food;
+
+    public void eat() {
+        System.out.println(name + "正在吃饭，吃的是" + this.food);
+    }
+
+    public void barking() {
+        System.out.println("动物在叫");
+    }
+
+}
+
+```
+Dogs类
+```java
+package com.microsoft.bean;
+//继承
+//子类 extends 父类
+public class Dogs extends Animal {
+    //alt + insert，重写方法
+
+    /*
+    在子类中，凡是有@Override的标签，
+    那它下面的方法一定是来自它父类的，但又不学它的父亲
+    这是它自己拥有的特性，是它自己的，它革新了
+    革新的内容就是方法体，override就是重写
+    */
+    @Override
+    public void barking() {
+//        super.barking();
+        System.out.println("汪汪！");
+    }
+}
+```
+Cats类
+```java
+package com.microsoft.bean;
+
+public class Cats extends Animal {
+    @Override
+    public void barking() {
+//        super.barking();
+        System.out.println("喵喵喵");
+    }
+}
+
+```
+Application类
+```java
+import com.microsoft.bean.Cats;
+import com.microsoft.bean.Dogs;
+
+public class Application {
+    public static void main(String[] args) {
+
+        Dogs zhangDog = new Dogs();
+        zhangDog.setName("Jerry");
+        zhangDog.setFood("狗粮");
+        zhangDog.eat();
+
+        Cats liCat = new Cats();
+        liCat.setName("Tom");
+        liCat.setFood("猫粮");
+        liCat.eat();
+
+        zhangDog.barking();
+        liCat.barking();
+
+    }
+}
+
+```
+
+## super啃老
+[java中子类构造方法和父类构造方法](https://blog.csdn.net/DTEzhihao/article/details/86765119)
+方法重写了，假如又想用回父类的方法，那就用@Override自带的super
+(该例中其余类与前例相同)
+Cats类
+```java
+package com.microsoft.bean;
+
+public class Cats extends Animal {
+    @Override
+    public void barking() {
+        super.barking();
+//        System.out.println("喵喵喵");
+    }
+}
+```
+我们会发现
+```java
+Dogs wangDog = new dog("Jerry",2);//error，不可以！
+```
+而
+```java
+Animal animal = new Animal;//可以的
+```
+**这是因为父类构造方法是绝对不能被子类继承的。**
+
+子类构造方法调用父类的构造方法重点是：**子类构造方法无论如何都要调用父类的构造方法。**
+子类构造方法要么调用父类无参构造方法（包括当父类没有构造方法时。系统默认给的无参构造方法），要么调用父类有参构造方法。
+
+Dogs类
+```java
+package com.microsoft.bean;
+
+public class Dogs extends Animal {
+
+    //alt + insert构造函数，这下就可以用父类的构造方法了
+    public Dogs() {
+    }
+
+    public Dogs(String name, String variety, int age, String food) {
+        super(name, variety, age, food);//看到没，自动生成就有super
+    }
+
+    @Override
+    public void barking() {
+//        super.barking();
+        System.out.println("汪汪！");
+    }
+}
+```
+
+## final
+不要忘了Java开发手册的要求
+> 常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长
+```java
+public static final String TEXT_COMMUNITY_NAME = "NanG";
+```
+Animal类
+```java
+package com.microsoft.bean;
+
+public class Animal {
+
+    public static final String COMMUNITY_NAME = "NanG";
+    
+    public void barking() {
+        System.out.println("动物在叫");
+    }
+
+}
+```
+Dog类
+```java
+package com.microsoft.bean;
+
+public class Dogs extends Animal {
+
+    //反例:若下面方法boolean前加final，则Labrador类无法重写
+    //final 方法 不能被子类继承或者重写 想为所欲为操作遗产不可能，但可以用用返回值
+    //final修饰变量时，此变量永远不能改，放static后，String前
+    public boolean isGuideBlindness(){
+        return false;
+    }
+}
+```
+Labrador类
+```java
+package com.microsoft.bean;
+
+//拉布拉多是最下层了，后面没人继承它了
+//final 最终 分不了了
+/*
+1. 遗产没人继承，也不可能被继承
+ */
+public final class Labrador extends Dogs{
+    @Override
+    public boolean isGuideBlindness() {
+        return true;
+    }
+}
+
+```
+Application类
+```java
+import com.microsoft.bean.Labrador;
+
+public class Application {
+    public static void main(String[] args) {
+
+        Labrador labrador = new Labrador();
+        System.out.println(labrador.isGuideBlindness());
+
+    }
+}
+
+```
+
+## 新的问题：
+* Animal没用，它是个抽象的东西，只能被继承（new Animal没有价值）
+* 万一后面新增子类忘重写了某方法咋办
+
+## 抽象类
+Animal本质上来说是没有人用的，它是一个抽象的，他抽取了这些猫狗的共性，作为使用
+抽象-----具体
+动物-----狗
+抽象的目的是为了解释（概括）具体的共性
+Animal animal = new Animal();  ×
+**所以，Animal类应该是这样的**
+```java
+//我们让Animal变成抽象类
+public abstract class Animal {
+
+}//现在开始，不能new Animal()了，因为没意义
+```
+
+## 抽象方法 ———— 不能有实际的意义 -> 你不知道Animal怎么叫的
+**动物叫声太多了，你==没法具体到某一个指定的叫声==**
+所以抽象方法不能加大括号
+```java
+public abstract void barking();
+```
+==如果写了抽象方法，那这个类必须是抽象类==
+==现在开始，不能写super了，所有继承Animal的类，必须重写抽象的方法==
+Animal类
+```java
+package com.microsoft.bean;
+
+public abstract class Animal {
+
+    public static final String COMMUNITY_NAME = "NanG";
+
+    public abstract void barking();
+
+}
+
+```
+Hamster类
+```java
+package com.microsoft.bean;
+
+// 当一个类继承一个抽象类，此时该子类必须重写父类中所有抽象方法
+public class Hamsters extends Animal {
+
+    @Override
+    public void barking() {
+        System.out.println("吱吱吱");
+    }
+}
+
+```
+Application类
+```java
+import com.microsoft.bean.Hamsters;
+
+public class Application {
+    public static void main(String[] args) {
+        Hamsters hamsters = new Hamsters();
+        hamsters.barking();
+    }
+}
+
+```
+
+## 接口
+如果Animal中所有的方法都是抽象的，那就没必要写抽象类了，
+因为有个更好的东西：接口
+
+Human接口
+```java
+//知道怎么用就行，后面Dao Service会学
+package com.microsoft.bean;
+
+//接口
+//里面所有的方法都是抽象的
+public interface Human {
+
+    public void eat();
+
+    public void run();
+
+}
+```
+Chinese类
+```java
+package com.microsoft.bean;
+
+// 实现接口
+//划红波浪线了，alt + 回车，实现方法
+
+// 类中的方法我们可以叫重写
+// 但在接口中，我们叫：实现
+public class Chinese implements Human{
+    @Override
+    public void eat() {
+        System.out.println("吃中餐");
+    }
+
+    @Override
+    public void run() {
+        System.out.println("养生跑");
+    }
+}
+```
+Westerner类
+```java
+package com.microsoft.bean;
+
+public class Westerner implements Human{
+    @Override
+    public void eat() {
+        System.out.println("吃西餐");
+    }
+
+    @Override
+    public void run() {
+        System.out.println("小跑");
+    }
+}
+```
+```java
+import com.microsoft.bean.Chinese;
+import com.microsoft.bean.Westerner;
+
+public class Application {
+    public static void main(String[] args) {
+        Chinese chinese = new Chinese();
+        chinese.eat();
+        chinese.run();
+
+        Westerner westerner = new Westerner();
+        westerner.eat();
+        westerner.run();
+    }
+}
+```
+
+## 接口和抽象类
+以Animal为例
+* 抽象类是对具体的事物进行抽象，比如Animal始终是类
+  > 猫、狗、老鼠
+* 接口是对动作、行为的抽象，Human始终是一个接口
+  ==不要把它抽象为名词！==
+  > 吃、跑、玩、乐
+    在接口中，动物是不会有姓名和年龄的
+
+## 多态
+1. 一定要有继承关系
+2. 向上转型或向下转型
+
+**优势**
+1. 她能够先使用父亲的东西
+2. 用到自己特性的时候，可以再切换回来
+3. 总结来说就是有多个功能
