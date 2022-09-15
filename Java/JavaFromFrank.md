@@ -993,6 +993,9 @@ public class Application {
 
 ## super啃老
 [java中子类构造方法和父类构造方法](https://blog.csdn.net/DTEzhihao/article/details/86765119)
+[Java子类的构造方法](https://blog.csdn.net/Soilerest/article/details/85610886)
+[Java构造方法和子类构造方法](https://blog.csdn.net/du_du1/article/details/91383128)
+[为什么创建了一个子类对象会调用其父类的构造方法](https://www.jianshu.com/p/9e7b6e2ffc8f)
 方法重写了，假如又想用回父类的方法，那就用@Override自带的super
 (该例中其余类与前例相同)
 Cats类
