@@ -15,6 +15,10 @@ public class Main {
     * 方法名：所有的方法名都应该以小写字母开头。如果方法名含有若干单词，则后面的每个单词首字母大写。
     * 源文件名：源文件名必须和类名相同。当保存文件的时候，你应该使用类名作为文件名保存（切记 Java 是大小写敏感的），文件名的后缀为 .java。（如果文件名和类名不相同则会导致编译错误）。
     * 主方法入口：所有的 Java 程序由 public static void main(String[] args) 方法开始执行。
+只有和文件名一致的类才能是public，其他的都是default（默认）
+
+==default别乱用！等用到接口再说==
+
 # 运行
 class文件通过Java虚拟机实现跨平台运行，包名命名时，一个.就是一个文件夹
 
@@ -22,15 +26,19 @@ class文件通过Java虚拟机实现跨平台运行，包名命名时，一个.�
 输出：sout加Tab键
 for循环：fori然后回车
 > for循环中length是变量不是函数，不用加括号
-侧栏展开：alt+1
-快速对齐：Ctrl+Alt+L
-快速生成变量：CTRL+ALT+V或者在没加分号时句末加.var
-主函数：psvm或者main
-输出离它最近的那个变量：soutv+回车
-多行注释：/*+回车
-快捷注释：ctrl+/
-方法注释：/**+回车
-撤回：ctrl+z
+> 侧栏展开：alt+1
+> 快速对齐：Ctrl+Alt+L
+> 快速生成变量：CTRL+ALT+V或者在没加分号时句末加.var
+> 主函数：psvm或者main
+> 输出离它最近的那个变量：soutv+回车
+> 多行注释：/*+回车
+> 快捷注释：ctrl+/
+> 方法注释：/**+回车
+> 撤回：ctrl+z
+>
+> 换行也可以直接来一行sout（啥都不加）
+>
+> int类型不赋值默认0，String类型不赋值默认null
 ```java
 package com.google;//用来定位Main文件在哪
 
@@ -101,14 +109,50 @@ public class Main {
         String str_2 = "world";
 
         System.out.println("str_1 -> length : " + str_1.length());
-        for (int i = 0;i<str_1.length();i++){
+        for (int i = 0;i<str_1.length;i++){
             
         }
     }
 }
 ```
 
+## .contains()
+
+```java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        String str = "abcd";
+        System.out.println(str.contains("ab"));
+    }
+}
+```
+
+输出为true
+
+## .equals()
+
+如果不是基本类型，那就是引用类型，如果用==判断引用类型，那就是判断它们是不是同一个对象（当然不是，但jvm底层优化了才返回true）
+
+比较String字符串是不是一样的话，推荐equals
+
+```java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        String str1 = "abcd";
+        String str2 = "abcd";
+        System.out.println(str1.equals(str2));
+    }
+}
+```
+
+结果为true
+
 ## 连接字符串
+
 > "hello" + "world"
 
 # 导包(在class上面导)
@@ -119,6 +163,9 @@ public class Main {
 
 # 数组
 不输值默认0
+
+基本类型的数组存的就是数字（如int[]），引用类型的数组存的就是引用
+
 ## 静态数组
 ```java
 //法一：初始化
@@ -137,7 +184,24 @@ for (double element: mylist) {
     System.out.println(element);
 }
 ```
+而对于二维数组
+
+```java
+int[][] arr = new int[][]{{1,2}
+                          {3,4}
+                          {5,6}};//记得加分号
+//先剥出每个数组，再剥出每个数组中的元素
+for(int[] i : arr){
+    for(int a : i){
+        System.out.println(a);
+    }
+}
+```
+
+
+
 ## Arrays（util的）
+
 ### sort排序
 ```java
 int[] arr_1 = {1426, 42, 53, 4, 5, 365, 67, 70};
@@ -250,6 +314,39 @@ public class Main {
 ---
 
 # 面向对象：封装、继承、多态
+
+```java
+Student student = new student();
+```
+
+引用类型(如String、Student) + 名称 = new 对象
+
+大写开头的才是引用类型，引用类型其实就相当于指针
+
+然后名称就指向这个新创建的对象了
+
+```java
+/*
+这个举例的方法是没用的，我只是想说明我可以传类进去
+因为类也是引用类型
+*/
+void a(Student s){
+    s.name = "Tom";
+}
+```
+
+
+
+只有实在存在的对象（对象是月饼，类是模具）我们才可以给他起名字，我们可以通过.来访问成员变量
+
+由于等号左右东西一样，所以我们也可以
+
+```java
+new student().swap(1,3);
+```
+
+
+
 ```java
 package com.microsoft.bean;
 
@@ -312,7 +409,9 @@ public class Application {
 }
 
 ```
+
 ## 注销账户和null空指针异常
+
 对象(zhangDog)都没了，如果还操作人家的属性(println name)，那就会NullPointerException，解决办法是不输出它的名字了
 
 ## OOP封装(Getter and Setter)
@@ -544,6 +643,30 @@ public class Application {
 ```
 
 ## 构造方法（构造器是为了初始化对象）
+
+对于
+
+```java
+public class Student{}
+```
+
+其class文件反编译后结果是
+
+```java
+public class Student{
+    public Student() {
+    }
+}
+```
+
+这就是构造方法，啥都不编写，编译时默认自带一个无参的构造方法
+
+new + 你想要使用的构造方法 就能创建出对应类型的对象，并将它的引用交给左边；或者也直接用new。。。访问
+
+没有返回类型的方法（包括void）就是构造方法
+
+在Student里面用构造方法，然后main方法里面在new的时候就输入变量的值
+
 * 初始化 定义+使用
   ```java
     int[] arrDogs = {1,2,3,4};
@@ -627,6 +750,8 @@ public class Application {
     ```
     还有件事，看出来下面是啥了吗
     没错，就是==重载==，构造方法也可以重载的
+    
+    你不构造方法默认不显示就是无参构造，当你决定构造方法时候，你构造的方法会把默认值替换了
 ```java
 public Dogs() {
 
@@ -643,8 +768,9 @@ public Dogs(String name, String variety, int age, String food) {
 }
 ```
 ## 关于this
-**this指的就是对象**,你不写也行，写了也直接相当于eat=eat，
+**this指的就是对象**，不能指类！，你不写也行，写了也直接相当于eat=eat，
 前面是private的eat，后面是传进来的eat
+
 * > this.age是上面private的age，
     详细来说作用对象zhangDog的age（因为传的是zhangDog）,
     int age是用户传进来的age
@@ -668,6 +794,8 @@ public Dogs(String name, String variety, int age, String food) {
 手动需要用System.gc();
 
 ## 静态变量和静态方法（立围墙区分自家小区和外来狗）
+成员对象（name、age）属于对象的，静态的东西属于类，属于谁从谁调用
+
 静态的东西用户是没法主动获取的
 静态的好处是建立在class类上层的，和它的对象根本没关系
 [Java static关键字（静态变量和静态方法）](https://ock.cn/qdirf)
