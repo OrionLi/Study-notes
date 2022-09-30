@@ -1448,6 +1448,7 @@ public class Application {
         //父类new子类->向上转型（替父从军），好处是隐藏自己
         HuaHu huaHu = new HuaMuLan();//对外说是花弧，实际上是花木兰
         //用花弧的方式new花木兰
+        //把木兰类型的变量当作花弧来用
 
         //打着她爹的名义，所以说自己是花弧
         System.out.println(huaHu.name);
