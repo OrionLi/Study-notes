@@ -980,7 +980,7 @@ Cats类
 package com.microsoft.bean;
 
 public class Cats extends Animal {
-    
+     
 }
 ```
 Application类
