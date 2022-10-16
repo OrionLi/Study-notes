@@ -24,104 +24,121 @@ public class Main {
 
 ![image-20221001124910158](C:\Users\84185\AppData\Roaming\Typora\typora-user-images\image-20221001124910158.png)
 
-  * Integer
+# Integer
 
-    ```java
-    Integer i = new Integer("666");
-    //或者
-    Integer i = Integer.valueOf("5555");
-    ```
+```java
+Integer i = new Integer("666");
+//或者
+Integer i = Integer.valueOf("5555");
+```
 
-* String
+# String
 
-  * str.length()
+## str.equals("x")
 
-    ```java
-    public static void main(String[] args) {
-        System.out.println("Hello World".length());   //虽然看起来挺奇怪的，但是确实支持这种写法
+### ==字符串比较一定要用equals而不是\=\===
+
+```java
+!IDEndNum.equals("x");//正确的不等于
+IDEndNum != "X";//错误的不等于
+```
+
+## str.length()
+
+```java
+public static void main(String[] args) {
+    System.out.println("Hello World".length());   //虽然看起来挺奇怪的，但是确实支持这种写法
+}
+```
+
+## str.contains("ab")
+
+## str.matches()
+
+> [str.matches() 方法 str.contains() 方法 - 昊子豪 - 博客园 (cnblogs.com)](https://www.cnblogs.com/haozihao/p/15431057.html)
+>
+> 以及青空霞光的Java重制版笔记（四）
+
+## substring切割 
+
+```java
+public static void main(String[] args) {
+    String str = "Hello World";
+    String sub = str.substring(0, 3);   //分割字符串，并返回一个新的子串对象
+    System.out.println(sub);
+}
+```
+
+## split分割
+
+```java
+public static void main(String[] args) {
+    String str = "Hello World";
+    String[] strings = str.split(" ");   //使用split方法进行字符串分割，比如这里就是通过空格分隔，得到一个字符串数组
+    for (String string : strings) {
+        System.out.println(string);
     }
-    ```
+}
+```
 
-  * str.contains("ab")
+## 字符串转字符数组
 
-  * substring切割
+```java
+public static void main(String[] args) {
+    String str = "Hello World";
+    char[] chars = str.toCharArray();
+    System.out.println(chars);
+}
+```
 
-    ```java
-    public static void main(String[] args) {
-        String str = "Hello World";
-        String sub = str.substring(0, 3);   //分割字符串，并返回一个新的子串对象
-        System.out.println(sub);
-    }
-    ```
+## 字符数组转字符串
 
-  * split分割
+```java
+public static void main(String[] args) {
+    char[] chars = new char[]{'奥', '利', '给'};
+    String str = new String(chars);
+    System.out.println(str);
+}
+```
 
-    ```java
-    public static void main(String[] args) {
-        String str = "Hello World";
-        String[] strings = str.split(" ");   //使用split方法进行字符串分割，比如这里就是通过空格分隔，得到一个字符串数组
-        for (String string : strings) {
-            System.out.println(string);
-        }
-    }
-    ```
+## 快速获得某个位上的字符
 
-  * 字符串转字符数组
+> str.charAt(0)
 
-    ```java
-    public static void main(String[] args) {
-        String str = "Hello World";
-        char[] chars = str.toCharArray();
-        System.out.println(chars);
-    }
-    ```
 
-  * 字符数组转字符串
-
-      ```java
-      public static void main(String[] args) {
-          char[] chars = new char[]{'奥', '利', '给'};
-          String str = new String(chars);
-          System.out.println(str);
-      }
-      ```
-
-  * 快速获得某个位上的字符
-  
-      > str.charAt(0)
-  
-  
     * 第一次出现的下标位置
-  
+    
       > str.indexOf("Hello")
       
     * 最后一次出现的下标位置
-  
+    
       > str.lastIndexOf("Hello")
       
     * 判断是否为空串""
-  
+    
       > str.isEmpty()
       
     * 字符串A.equals(字符串B)
-  
+    
       > equals()方法再String被重写为比较值是否相同，重写前equals作用和==等价，对引用类型用就是比较二者地址
-  
+
+## 字符串 = 字符串.replace("oldData","newData");
 
 
-* Arrays
 
-  * Arrays.toStrings(数组名) -> 来以字符串形式输出数组arr
+# Arrays
 
-  * Arrays.sort(数组名) -> 用来排序
+## Arrays.toStrings(数组名) -> 来以字符串形式输出数组arr
 
-  * Arrays.binarySearch(数组名,要查找的元素) -> 二分查找，要先排序
+## Arrays.sort(数组名) -> 用来排序
 
-  * Arrays.equals(数组A,数组B) -> ctrl+alt+v再按回车
+## Arrays.binarySearch(数组名,要查找的元素) -> 二分查找，要先排序
 
-    >  boolean b = Arrays.equals(arr_1, arr_2);
+## Arrays.equals(数组A,数组B) -> ctrl+alt+v再按回车
 
-  * Arrays.fill(array, 3, 6, 50); -> fill填充，下标3到6换成50
+>  boolean b = Arrays.equals(arr_1, arr_2);
 
-* Getter和Setter
+## Arrays.fill(array, 3, 6, 50); -> fill填充，下标3到6换成50
+
+## Getter和Setter
 

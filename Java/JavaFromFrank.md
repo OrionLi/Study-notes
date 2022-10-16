@@ -1316,7 +1316,7 @@ package com.microsoft.bean;
 
 //接口
 //里面所有的方法都是抽象的
-public interface Human {
+public interface Human { 
 
     public void eat();
 
@@ -1469,3 +1469,319 @@ public class Application {
     }
 }
 ```
+
+## 匿名内部类
+
+Application类()
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        new Human() {
+            @Override
+            public void eat() {
+                System.out.println("中国人吃中国菜");
+            }
+        }.eat();
+    }
+}
+```
+
+Lambda表达式下的Application类
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        ((Human) () -> System.out.println("中国人吃中国菜")).eat();
+    }
+}
+```
+
+
+
+Human接口
+
+```java
+public interface Human {
+    public void eat();
+}
+```
+
+# Java 进阶==练习为重！==
+
+API，应用程序接口，是给客户（开发者用的）
+
+所以Java API就是给Java的开发者用的，方便去给他们开发。只要有API，就应当有相应的API文档
+
+## Base API
+
+* 自己写工具方法就直接static，这样可以直接类名 + . 访问，不用new了
+
+  > 假设类名是螺丝刀，那我要用“拧螺丝”这个方法的时候，我想直接用已有的（static）而不是新买一把（new 一个）
+
+### Scanner,Number,Math,Random
+
+### ThreadLocalRandom
+
+本地，多线程，线程安全，高性能，可以自定义首尾范围的随机方法
+
+==因为这是static方法，所以不用new，直接类名.就可以了==
+
+```java
+double i = ThreadLocalRandom.current().nextDouble(0.9,1.5);
+```
+
+### Date
+
+ 查当前时间
+
+```java
+System.out.println(new Date());
+```
+
+### DateFormat和SimpleDateFormat
+
+DateFormat是抽象类，不能new，所以要new它的子类
+
+```java
+Date date = new Date();
+DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dateFormat这个对象现在就跟着括号里这个格式了
+//哪怕你后面new再多的Date，也可以用dateFormat这个对象里面的这个format()方法来定制格式 
+System.out.println(dateFormat.format(date));
+```
+
+![image-20221007095449245](C:\Users\84185\AppData\Roaming\Typora\typora-user-images\image-20221007095449245.png)
+
+### Calendar（推荐使用）
+
+==Calendar类是一个抽象类，所以下面这张图没有new一个Calendar对象！==
+
+![image-20221007101051748](C:\Users\84185\AppData\Roaming\Typora\typora-user-images\image-20221007101051748.png)
+
+当然了，不止get，也可以set
+
+### System
+
+这个类本身就是final，更何况里面的方法全是static，所以直接.就行
+
+#### 获取当前时间戳
+
+```java
+System.out println(System.currentTimeMillis());
+```
+
+#### 垃圾回收
+
+gc()
+
+#### 退出Java虚拟机
+
+exit(0);
+
+#### 高性能的arraycopy（因为是系统级别的）
+
+![image-20221007192319813](C:\Users\84185\AppData\Roaming\Typora\typora-user-images\image-20221007192319813.png)
+
+## 1.unit test and main function
+
+### 模块化编程是面向对象语言的核心
+
+main是程序的入口点，一个项目只能有一个main方法
+
+
+
+以往的工作流程
+
+1. 编写功能函数（方法）
+
+2. 本地测试
+
+3. 在main方法里调用函数测试
+
+4. 控制台看输出是否符合预期
+
+5. 预期结果和测试结果是通过人工计算的
+
+   
+
+企业的工程原则
+
+1. main方法里不应该有太多逻辑性（或功能性）的语句，由于要追求复用性，所以把他们抽离出来
+
+2. 以学生管理系统为例，最后的程序应该是这样的
+
+   ```java
+   public class Application {
+       public static void main(String[] args) {
+           run();
+       }
+       
+       public static void run() {
+           sayHello();
+           //.....
+           //.....
+       }
+       public static void sayHello(){
+           System.out.println("----------欢迎来到学生管理系统---------")
+               //....
+       }
+       //.......
+       //......
+   }
+   ```
+
+   main只是一个起始点，少出现：
+
+   逻辑性语句：如if else
+
+   功能性语句：求和方法什么的
+
+   提示性语句：以print为突出案例
+
+所以，
+
+* 脱离main里啥都写
+* 在main里面测试是有问题的，因为main是整个程序的入口点，而不是让你用来测试程序的，处理功能模块的
+
+这就是模块化编程
+
+* 把功能性的抽离出来成为一个方法，然后通过main进行调用
+
+### 那么如果不用main，我们用什么
+
+JUnit，Java语言的一个==单元测试（也叫模块测试）框架==，是给程序员用的（而不是测试人员）
+
+每个理想的测试案例独立于其他案例
+
+### Maven Respository获取JUnit
+
+现在先学jar包（因为构建工具太麻烦了，先凑合着用）
+
+jdk的包不够用了，所以你要引入别人的jar包
+
+### 演示
+
+先在==最上面==的文件夹里建一个目录叫lib，去文件资源管理器把junit-4.13.2.jar和hamcrest-core-1.3.jar包扔进去，右键添加到库
+
+Calc类
+
+```java
+package com.google;
+
+public class Calc {
+    public static int sum(int numberA, int numberB) {
+        return numberA + numberB;
+    }
+
+    public static int subtraction(int numberA, int numberB) {
+        return numberA - numberB;
+    }
+}
+```
+
+CalcTest类
+
+```java
+package com.google;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.concurrent.ThreadLocalRandom;
+
+public class CalcTest {
+//想测谁测谁，方法测试相互独立，可以同时测试不同的解决方案
+    @Test
+    public void sum() {
+
+        //随机测试，摆脱main和println的操作
+        int numberA = ThreadLocalRandom.current().nextInt();
+        int numberB = ThreadLocalRandom.current().nextInt();
+        int sum = Calc.sum(numberA, numberB);
+
+        //断言
+        //肯定是对的，只是演示哈
+        Assert.assertEquals(numberA + numberB, sum);
+    }
+
+    @Test
+    public void subtraction() {
+
+        int numberA = ThreadLocalRandom.current().nextInt();
+        int numberB = ThreadLocalRandom.current().nextInt();
+        int subtraction = Calc.subtraction(numberA, numberB);
+
+        Assert.assertEquals(numberA - numberB, subtraction);
+    }
+
+}
+```
+
+## StringBuilder（查文档）
+
+==首先，String的各种方法一定要熟悉==
+
+```java
+String s1 = "Hello";
+String s2 = "World";
+s1 = s1 + s2;//此时s1指向了一块新的内存，原来的废了（成垃圾了），但到底怎么样了就是后话了
+```
+
+```java
+StringBulider stringBulider = new StringBuilder();
+stringBulider.append("Hello");
+stringBulider.append("World");
+//也可以链式调用
+stringBulider.append("Hello").append("World");
+stringBulider.reverse();
+System.out.println(stringBulider);
+//还有很多方法
+```
+
+直接toString就变String了
+
+当然，也可以滞空字符串序列（把留的用来缓冲的空去掉）==注意，这不是静态类，是“对象.”不是“类名.”==
+
+```java
+stringBulider.trimToSize();
+```
+
+## 异常
+
+括号里是蓝色的才跟你有关系，灰色的就不用管了
+
+### try catch（检测异常，不是抛出异常！）
+
+ctrl + alt + t选择try catch包裹，把catch里面的删掉，就可以拿去糊弄毕设（没报错了）==在公司用要被开除的！==
+
+### 为什么要抛出异常
+
+为了避免后续引发一系列程序bug,以及定义文件发生错误的位置
+
+```java
+@Test
+    public void demo() throws FileNotFoundException//直接全换成Exception也可以
+        if(文件不存在){
+            throw new FileNotFoundException("文件不存在")
+    }
+```
+
+也可以自己写一个异常类继承自Exception(编译时检测)（写这个类时记得alt + insert，第一个全选）
+
+后面用到这个方法时就要么捕获异常，要么抛出异常
+
+```java
+public int sum(int a,int b) throws FrankException{
+        if (a > 10 || b > 10)
+            throw new FrankException("数据过大！");
+        return  a + b;
+    }
+```
+
+RunTimeException是运行时检测，但一般不建议
+
+[Java throws与try..catch异常处理_我的猴子的博客-CSDN博客](https://blog.csdn.net/qq_51272114/article/details/125380406)
+
+更详细的回答
+
+[Java 中 try-catch,throw和throws的使用_daxiong0816的博客-CSDN博客_try里面throw](https://blog.csdn.net/daxiong0816/article/details/121868890)
