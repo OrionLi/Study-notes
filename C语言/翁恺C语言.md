@@ -29,7 +29,7 @@ printf("时间差是%d小时%d分。", t/60, t%60);
 ```c
 int a,b;
 
-scasnf("%d %d"，&a, &b);
+scanf("%d %d"，&a, &b);
 
 double c = (a+b)/2.0;
 
