@@ -41,6 +41,12 @@ for循环：fori然后回车
 >
 > 批量修改：shift + f6
 >
+> 替换：ctrl + r
+>
+> xml快捷注释：ctrl + shift + /
+>
+> 大纲视图：alt + 7，可以点边栏右上角设置移到右边去
+>
 > 换行也可以直接来一行sout（啥都不加）
 >
 > int类型不赋值默认0，String类型不赋值默认null
@@ -1792,3 +1798,13 @@ RunTimeException是运行时检测，但一般不建议
 更详细的回答
 
 [Java 中 try-catch,throw和throws的使用_daxiong0816的博客-CSDN博客_try里面throw](https://blog.csdn.net/daxiong0816/article/details/121868890)
+
+# IO流
+
+## 理解
+
+输入：输进去，也就是获取
+
+所以我们打开一个文件是输入，因为它是相对于我们目前的程序而言的
+
+## FiIeInputStream字节流读取文件
